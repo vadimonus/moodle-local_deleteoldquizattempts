@@ -1,9 +1,9 @@
 Delete old quiz and question attempts Moodle plugin
 ===================================================
 
-??? Requirements
+Requirements
 ------------
-- Moodle 3.0 (build 2015111600) or later.
+- Moodle 2.7 (build 2014051200) or later.
 
 Installation
 ------------
@@ -18,16 +18,16 @@ with scheduler tasks.
 CLI usage
 ---------
 
-Dispay help.  
+Dispay help.
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --help`
 
-Delete attempts that are older than 90 days.   
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90`
+Delete attempts that are older than 90 days and shows progress.
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --verbose`
 
-Delete attempts that are created before specified timestamp.  
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800`  
- 
-Delete attempts that are created before 2018-01-01 00:00:00 (UTC).   
+Delete attempts that are created before specified timestamp.
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800`
+
+Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`
 
 Author
@@ -41,5 +41,5 @@ Links
 
 Changes
 -------
-Release 0.5 (build 2019010300):
+Release 0.5 (build 2019010301):
 - Initial release.
