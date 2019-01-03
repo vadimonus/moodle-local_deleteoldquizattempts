@@ -16,21 +16,39 @@
 
 /**
  * Tool for deleting old quiz and question attempts.
- * CLI tool.
+ * Scheduler task.
  *
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define('CLI_SCRIPT', true);
+namespace local_deleteoldquizattempts\task;
 
-require_once(__DIR__ . '/../../../config.php');
-require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
 
-// Ensure errors are well explained.
-set_debugging(DEBUG_DEVELOPER, true);
+/**
+ * Scheduler task.
+ *
+ * @package    local_deleteoldquizattempts
+ * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class delete_attempts_task extends \core\task\scheduled_task {
 
+    public function get_name() {
+        return get_string('taskname', 'local_deleteoldquizattempts');
+    }
 
-exit(0);
+    public function execute() {
+        $lifetime = (int)get_config('local_deleteoldquhizattempts', 'attempt_lifetime');
+        if (empty($lifetime) || $lifetime < 0) {
+            return;
+        }
+
+        $timestamp = time() - ($lifetime  * 3600 * 24);
+        $attempts = local_purgequestioncategory_delete_attempts($timestamp);
+        mtrace("    Deleted $attempts old quiz attempts.");
+    }
+
+}
