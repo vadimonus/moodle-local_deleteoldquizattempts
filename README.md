@@ -13,7 +13,7 @@ complete the installation.
 Usage
 -----
 Navigate to plugin settings and specify maximum lifetime of quiz attempts. Older attempts will be automatically deleted
-with scheduler tasks.
+with scheduler task.
 
 CLI usage
 ---------
