@@ -16,7 +16,6 @@
 
 /**
  * Tool for deleting old quiz and question attempts.
- * CLI tool.
  *
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>

@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,6 +21,7 @@
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -41,7 +41,6 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
      * Tests task::execute
      */
     public function test_execute() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);

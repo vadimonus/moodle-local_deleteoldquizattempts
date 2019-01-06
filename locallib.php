@@ -30,6 +30,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
  * Deletes quiz attempts older than timestamp
  *
  * @param int $timestamp
+ * @param int $timelimit
  * @param progress_trace|null $trace
  * @return int deleted attempts count
  */
@@ -72,11 +73,11 @@ function local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit = 0,
  */
 function local_deleteoldquizattempts_cli($options) {
 
-    $exclusive_options = array_intersect(
+    $exclusiveoptions = array_intersect(
         array_keys(array_filter($options)),
         array('days', 'timestamp', 'date')
     );
-    if ($options['help'] || count($exclusive_options) != 1) {
+    if ($options['help'] || count($exclusiveoptions) != 1) {
         $help = "Delete old quiz and question attempts
 
 Options:
@@ -104,9 +105,9 @@ Examples:
 
     if ($options['days']) {
         $timestamp = time() - ((int)$options['days'] * 3600 * 24);
-    } elseif ($options['timestamp']) {
+    } else if ($options['timestamp']) {
         $timestamp = (int)$options['timestamp'];
-    } elseif ($options['date']) {
+    } else if ($options['date']) {
         $tz = new DateTimeZone('UTC');
         $date = DateTime::createFromFormat('Y-m-d H:i:s', $options['date'], $tz);
         $timestamp = $date->getTimestamp();

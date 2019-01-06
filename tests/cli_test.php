@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,6 +21,7 @@
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -79,13 +79,12 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
         $output = local_deleteoldquizattempts_cli($options);
         $output = ob_get_clean();
         $this->assertContains('Print out this help', $output);
-}
+    }
 
     /**
      * Tests cli/delete_attempts.php --days=1
      */
     public function test_days() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);
@@ -139,7 +138,6 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
      * Tests cli/delete_attempts.php --timestamp=10000
      */
     public function test_timestamp() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);
@@ -190,7 +188,6 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
      * Tests cli/delete_attempts.php --date="2000-01-01 00:00:00"
      */
     public function test_date() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);
@@ -200,7 +197,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
         $quiz = $generator->create_instance(array('course' => $course->id));
 
-        $timestamp = 946684800; // 2000-01-01 00:00:00.
+        $timestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
         $attemptid = $DB->insert_record('quiz_attempts', array(
             'quiz' => $quiz->id,
             'userid' => $user->id,

@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tool for deleting old quiz and question attempts.
@@ -36,7 +36,7 @@ if ($hassiteconfig) {
                 0 => new lang_string('donotdeleteonschedule', 'local_deleteoldquizattempts'),
                 365 * 5 => new lang_string('numyears', '', 5),
                 365 * 3 => new lang_string('numyears', '', 3),
-                365 * 2=> new lang_string('numyears', '', 2),
+                365 * 2 => new lang_string('numyears', '', 2),
                 365 => new lang_string('numyears', '', 1),
                 180 => new lang_string('numdays', '', 180),
                 150 => new lang_string('numdays', '', 150),

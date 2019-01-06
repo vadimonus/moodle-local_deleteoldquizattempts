@@ -16,7 +16,6 @@
 
 /**
  * Tool for deleting old quiz and question attempts.
- * Scheduler task.
  *
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
@@ -24,6 +23,8 @@
  */
 
 namespace local_deleteoldquizattempts\task;
+
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
 
@@ -36,10 +37,19 @@ require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
  */
 class delete_attempts_task extends \core\task\scheduled_task {
 
+    /**
+     * Get a descriptive name for this task (shown to admins).
+     *
+     * @return string
+     */
     public function get_name() {
         return get_string('taskname', 'local_deleteoldquizattempts');
     }
 
+    /**
+     * Do the job.
+     * Throw exceptions on errors (the job will be retried).
+     */
     public function execute() {
         $lifetime = (int)get_config('local_deleteoldquizattempts', 'attemptlifetime');
         $timelimit = (int)get_config('local_deleteoldquizattempts', 'maxexecutiontime');
@@ -47,7 +57,7 @@ class delete_attempts_task extends \core\task\scheduled_task {
             return;
         }
 
-        $timestamp = time() - ($lifetime  * 3600 * 24);
+        $timestamp = time() - ($lifetime * 3600 * 24);
         $attempts = local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit);
         mtrace("    Deleted $attempts old quiz attempts.");
     }

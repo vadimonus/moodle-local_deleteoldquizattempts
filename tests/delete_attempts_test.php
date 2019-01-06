@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,6 +21,7 @@
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -41,7 +41,6 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
      * Tests local_purgequestioncategory_delete_attempts
      */
     public function test_delete_attempts() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);
@@ -101,27 +100,24 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
      * Tests local_purgequestioncategory_delete_attempts call with trace and timelimit
      */
     public function test_delete_attempts_with_timelimit() {
-        /** @var moodle_database $DB */
         global $DB;
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')
-                ->setMethods(array('output'))
-                ->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
 
-        $trace->expects($this->at(0))
-            ->method('output')
-            ->with($this->stringContains('Deleted 1 of 1'))
-            ->willReturnCallback(function () {
-                sleep(2);
-            });
-                    
-        $trace->expects($this->at(1))
-            ->method('output')
-            ->with($this->stringContains('Operation stopped due to time limit'))
-            ->willReturn(null);
-                    
+        $expectation1 = $trace->expects($this->at(0));
+        $expectation1->method('output');
+        $expectation1->with($this->stringContains('Deleted 1 of 1'));
+        $expectation1->willReturnCallback(function () {
+            sleep(2);
+        });
+
+        $expectation2 = $trace->expects($this->at(1));
+        $expectation2->method('output');
+        $expectation2->with($this->stringContains('Operation stopped due to time limit'));
+        $expectation2->willReturn(null);
+
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
