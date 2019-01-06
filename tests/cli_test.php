@@ -45,6 +45,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => false,
             'timestamp' => false,
             'date' => false,
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );
@@ -57,6 +58,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => 1,
             'timestamp' => false,
             'date' => false,
+            'timelimit' => false,
             'verbose' => false,
             'help' => true
         );
@@ -69,6 +71,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => 1,
             'timestamp' => 1,
             'date' => '2000-01-01 00:00:00',
+            'timelimit' => false,
             'verbose' => false,
             'help' => true
         );
@@ -108,6 +111,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => 3,
             'timestamp' => false,
             'date' => false,
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );
@@ -119,6 +123,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => 1,
             'timestamp' => false,
             'date' => false,
+            'timelimit' => false,
             'verbose' => true,
             'help' => false
         );
@@ -160,6 +165,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => false,
             'timestamp' => 9999,
             'date' => false,
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );
@@ -171,6 +177,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => false,
             'timestamp' => 10000,
             'date' => false,
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );
@@ -179,8 +186,8 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
         $this->assertEmpty($attempt);
     }
 
-        /**
-     * Tests cli/delete_attempts.php --timestamp=10000
+    /**
+     * Tests cli/delete_attempts.php --date="2000-01-01 00:00:00"
      */
     public function test_date() {
         /** @var moodle_database $DB */
@@ -209,6 +216,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => false,
             'timestamp' => false,
             'date' => '2000-01-01 00:00:00',
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );
@@ -220,6 +228,7 @@ class local_deleteoldquizattempts_cli_testcase extends advanced_testcase {
             'days' => false,
             'timestamp' => false,
             'date' => '2000-01-01 00:00:01',
+            'timelimit' => false,
             'verbose' => false,
             'help' => false
         );

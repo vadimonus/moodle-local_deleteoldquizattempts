@@ -35,6 +35,7 @@ list($options, $unrecognized) = cli_get_params(
         'days' => false,
         'timestamp' => false,
         'date' => false,
+        'timelimit' => false,
         'verbose' => false,
         'help' => false
     ),
@@ -49,4 +50,4 @@ if ($unrecognized) {
     cli_error(get_string('cliunknowoption', 'admin', $unrecognized), 2);
 }
 
-local_deleteoldquizattempts_delete_attempts($options);
+local_deleteoldquizattempts_cli($options);

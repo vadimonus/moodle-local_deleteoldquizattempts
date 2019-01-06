@@ -41,13 +41,14 @@ class delete_attempts_task extends \core\task\scheduled_task {
     }
 
     public function execute() {
-        $lifetime = (int)get_config('local_deleteoldquizattempts', 'attempt_lifetime');
+        $lifetime = (int)get_config('local_deleteoldquizattempts', 'attemptlifetime');
+        $timelimit = (int)get_config('local_deleteoldquizattempts', 'maxexecutiontime');
         if (empty($lifetime) || $lifetime < 0) {
             return;
         }
 
         $timestamp = time() - ($lifetime  * 3600 * 24);
-        $attempts = local_deleteoldquizattempts_delete_attempts($timestamp);
+        $attempts = local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit);
         mtrace("    Deleted $attempts old quiz attempts.");
     }
 

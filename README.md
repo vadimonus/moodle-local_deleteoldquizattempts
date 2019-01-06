@@ -25,7 +25,7 @@ Delete attempts that are older than 90 days and shows progress.
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --verbose`
 
 Delete attempts that are created before specified timestamp.
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800`
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800 --timelimit=300`
 
 Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`

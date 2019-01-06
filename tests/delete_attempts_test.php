@@ -98,9 +98,9 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
     }
 
     /**
-     * Tests local_purgequestioncategory_delete_attempts call with trace
+     * Tests local_purgequestioncategory_delete_attempts call with trace and timelimit
      */
-    public function test_delete_attempts_with_trace() {
+    public function test_delete_attempts_with_timelimit() {
         /** @var moodle_database $DB */
         global $DB;
 
@@ -110,10 +110,18 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
                 ->setMethods(array('output'))
                 ->getMock();
 
-        $trace->expects($this->exactly(1))
-                ->method('output')
-                ->with($this->stringContains('Deleted 1 of 1'));
-
+        $trace->expects($this->at(0))
+            ->method('output')
+            ->with($this->stringContains('Deleted 1 of 1'))
+            ->willReturnCallback(function () {
+                sleep(2);
+            });
+                    
+        $trace->expects($this->at(1))
+            ->method('output')
+            ->with($this->stringContains('Operation stopped due to time limit'))
+            ->willReturn(null);
+                    
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
@@ -130,6 +138,6 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
             'attempt' => 0,
             'uniqueid' => 0
         ));
-        local_deleteoldquizattempts_delete_attempts($now + 1, $trace);
+        local_deleteoldquizattempts_delete_attempts($now + 1, 1, $trace);
     }
 }

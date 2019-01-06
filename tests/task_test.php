@@ -46,8 +46,6 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $this->resetAfterTest(true);
-
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
@@ -67,12 +65,13 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
 
         $task = new local_deleteoldquizattempts\task\delete_attempts_task();
 
-        set_config('attempt_lifetime', null, 'local_deleteoldquizattempts');
+        set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
+        set_config('max', null, 'local_deleteoldquizattempts');
         $task->execute();
         $attempt = $DB->get_record('quiz_attempts', array('id' => $attemptid));
         $this->assertNotEmpty($attempt);
 
-        set_config('attempt_lifetime', 1, 'local_deleteoldquizattempts');
+        set_config('attemptlifetime', 1, 'local_deleteoldquizattempts');
         ob_start();
         $task->execute();
         $output = ob_get_clean();

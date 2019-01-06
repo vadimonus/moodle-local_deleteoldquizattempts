@@ -33,7 +33,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
  * @param progress_trace|null $trace
  * @return int deleted attempts count
  */
-function local_deleteoldquizattempts_delete_attempts($timestamp, $trace = null) {
+function local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit = 0, $trace = null) {
     global $DB;
 
     if ($trace) {
@@ -42,6 +42,7 @@ function local_deleteoldquizattempts_delete_attempts($timestamp, $trace = null) 
         $total = 0;
     }
     $deleted = 0;
+    $starttime = time();
     $rs = $DB->get_recordset_select('quiz_attempts', "timestart < :timestamp", array('timestamp' => $timestamp));
     foreach ($rs as $attempt) {
         $quiz = $DB->get_record('quiz', array('id' => $attempt->quiz));
@@ -52,6 +53,12 @@ function local_deleteoldquizattempts_delete_attempts($timestamp, $trace = null) 
                 'deleted' => $deleted,
                 'total' => $total,
             )));
+        }
+        if ($timelimit && (time() > $starttime + $timelimit)) {
+            if ($trace) {
+                $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+            }
+            break;
         }
     }
     $rs->close();
@@ -77,6 +84,7 @@ Options:
 --timestamp=          Delete attempts that are created before specified UTC timestamp
 --date=               Delete attempts that are created before specified date.
                       Use \"YYYY-MM-DD HH:MM:SS\" format in UTC
+--timelimit=          Stop execution after specified number of seconds
 -v, --verbose         Show progress
 -h, --help            Print out this help
 
@@ -84,8 +92,9 @@ Only one of --days, --timestamp and --date options should be specified.
 
 Examples:
  php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --verbose
- php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800
- php local/deleteoldquizattempts/cli/delete_attempts.php --date=\"2018-01-01 00:00:00\"";
+ php local/deleteoldquizattempts/cli/delete_attempts.php --timestamp=1514764800 --timelimit=300
+ php local/deleteoldquizattempts/cli/delete_attempts.php --date=\"2018-01-01 00:00:00\"
+";
         echo $help;
         return;
     }
@@ -109,7 +118,13 @@ Examples:
         $trace = null;
     }
 
-    $deleted = local_deleteoldquizattempts_delete_attempts($timestamp, $trace);
+    if ($options['timelimit']) {
+        $timelimit = (int)$options['timelimit'];
+    } else {
+        $timelimit = 0;
+    }
+
+    local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit, $trace);
 
     if ($trace) {
         $trace->finished();

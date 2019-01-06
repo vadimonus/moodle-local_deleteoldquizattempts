@@ -22,9 +22,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['attempt_lifetime'] = 'Delete attempts older than';
-$string['attempt_lifetime_help'] = 'Quiz аttempts that are older than specified value will be deleted with scheduler task. If "Do not delete old attempts" value is selected, you can still delete atttempts with CLI command.';
+$string['attemptlifetime'] = 'Delete attempts older than';
+$string['attemptlifetime_help'] = 'Quiz аttempts that are older than specified value will be deleted with scheduler task. If "Do not delete old attempts" value is selected, you can still delete atttempts with CLI command.';
 $string['donotdeleteonschedule'] = 'Do not delete old attempts';
+$string['maxexecutiontime'] = 'Max execution time';
+$string['maxexecutiontime_help'] = 'Deleting old attempts can cause high server load. This parameter limits the maximum execution time of scheduler task.';
+$string['maxexecutiontime_reached'] = 'Operation stopped due to time limit';
+$string['notlimited'] = 'Not limited';
 $string['pluginname'] = 'Old quiz and question attempts deletion';
 $string['progress'] = 'Deleted {$a->deleted} of {$a->total}';
 $string['taskname'] = 'Old quiz and question attempts deletion';

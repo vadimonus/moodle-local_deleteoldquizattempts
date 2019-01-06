@@ -28,21 +28,45 @@ if ($hassiteconfig) {
     $ADMIN->add('localplugins', $settings);
     $settings->add(
         new admin_setting_configselect(
-            'local_deleteoldquizattempts/attempt_lifetime',
-            new lang_string('attempt_lifetime', 'local_deleteoldquizattempts'),
-            new lang_string('attempt_lifetime_help', 'local_deleteoldquizattempts'),
+            'local_deleteoldquizattempts/attemptlifetime',
+            new lang_string('attemptlifetime', 'local_deleteoldquizattempts'),
+            new lang_string('attemptlifetime_help', 'local_deleteoldquizattempts'),
             0,
             array(
                 0 => new lang_string('donotdeleteonschedule', 'local_deleteoldquizattempts'),
-                1000 => new lang_string('numdays', '', 1000),
-                365 => new lang_string('numdays', '', 365),
-                365 => new lang_string('numdays', '', 365),
+                365 * 5 => new lang_string('numyears', '', 5),
+                365 * 3 => new lang_string('numyears', '', 3),
+                365 * 2=> new lang_string('numyears', '', 2),
+                365 => new lang_string('numyears', '', 1),
                 180 => new lang_string('numdays', '', 180),
                 150 => new lang_string('numdays', '', 150),
                 120 => new lang_string('numdays', '', 120),
                 90 => new lang_string('numdays', '', 90),
                 60 => new lang_string('numdays', '', 60),
                 30 => new lang_string('numdays', '', 30)
+            )
+        )
+    );
+    $settings->add(
+        new admin_setting_configselect(
+            'local_deleteoldquizattempts/maxexecutiontime',
+            new lang_string('maxexecutiontime', 'local_deleteoldquizattempts'),
+            new lang_string('maxexecutiontime_help', 'local_deleteoldquizattempts'),
+            0,
+            array(
+                0 => new lang_string('notlimited', 'local_deleteoldquizattempts'),
+                30 => new lang_string('numseconds', '', 30),
+                60 => new lang_string('numminutes', '', 1),
+                60 * 5 => new lang_string('numminutes', '', 5),
+                60 * 10 => new lang_string('numminutes', '', 10),
+                60 * 15 => new lang_string('numminutes', '', 15),
+                60 * 30 => new lang_string('numminutes', '', 30),
+                60 * 60 => new lang_string('numhours', '', 1),
+                60 * 60 * 2 => new lang_string('numhours', '', 2),
+                60 * 60 * 3 => new lang_string('numhours', '', 3),
+                60 * 60 * 4 => new lang_string('numhours', '', 4),
+                60 * 60 * 8 => new lang_string('numhours', '', 8),
+                60 * 60 * 12 => new lang_string('numhours', '', 12),
             )
         )
     );
