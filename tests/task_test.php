@@ -42,7 +42,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
         set_config('maxexecutiontime', null, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', null, 'local_deleteoldquizattempts');
@@ -67,7 +67,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');
         set_config('maxexecutiontime', 0, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', 0, 'local_deleteoldquizattempts');
@@ -76,13 +76,13 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         $mockbuilder->setMethods(array('delete_attempts', 'delete_unused_questions'));
         $helper = $mockbuilder->getMock();
 
-        $expectedTimestamp = time() - 30 * 3600 * 24;
+        $expectedtimestamp = time() - 30 * 3600 * 24;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
         $expectation1->with(
             $this->logicalAnd(
-                $this->greaterThanOrEqual($expectedTimestamp),
-                $this->lessThan($expectedTimestamp + 5)
+                $this->greaterThanOrEqual($expectedtimestamp),
+                $this->lessThan($expectedtimestamp + 5)
             ),
             0
         );

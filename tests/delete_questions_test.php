@@ -44,7 +44,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $questiongenerator->create_question_category();
         $question = $questiongenerator->create_question(
@@ -53,7 +53,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
             array('category' => $category->id)
         );
         $DB->set_field('question', 'hidden', 1, array('id' => $question->id));
-        
+
         $helper = new local_deleteoldquizattempts\helper();
         list($deleted, $skipped) = $helper->delete_unused_questions();
         $question = $DB->get_record('question', array('id' => $question->id));
@@ -69,17 +69,17 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
-        
+
         $expectation1 = $trace->expects($this->at(0));
         $expectation1->method('output');
         $expectation1->with($this->stringContains('Deleted 1, skipped 0 of 1'));
-            
+
         $expectation2 = $trace->expects($this->at(1));
         $expectation2->method('output');
         $expectation2->with($this->stringContains('Operation stopped due to time limit'));
-            
+
         $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $questiongenerator->create_question_category();
         $question = $questiongenerator->create_question(
@@ -88,7 +88,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
             array('category' => $category->id)
             );
         $DB->set_field('question', 'hidden', 1, array('id' => $question->id));
-        
+
         $helper = new local_deleteoldquizattempts\helper();
         list($deleted, $skipped) = $helper->delete_unused_questions(time(), $trace);
         $question = $DB->get_record('question', array('id' => $question->id));
@@ -96,4 +96,5 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         $this->assertEquals(1, $deleted);
         $this->assertEquals(0, $skipped);
     }
+
 }

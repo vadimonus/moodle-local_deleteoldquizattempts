@@ -90,18 +90,18 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
-        
-        $expectedTimestamp = time() - 3 * 3600 * 24;
+
+        $expectedtimestamp = time() - 3 * 3600 * 24;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
         $expectation1->with(
             $this->logicalAnd(
-                $this->greaterThanOrEqual($expectedTimestamp),
-                $this->lessThan($expectedTimestamp + 5)
+                $this->greaterThanOrEqual($expectedtimestamp),
+                $this->lessThan($expectedtimestamp + 5)
             ),
             0,
             null
@@ -125,16 +125,16 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
-        
-        $expectedTimestamp = 10000;
+
+        $expectedtimestamp = 10000;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
         $expectation1->with(10000, 0, null);
-        
+
         $options = array(
             'days' => false,
             'timestamp' => 10000,
@@ -157,12 +157,12 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
-        
-        $expectedTimestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
+
+        $expectedtimestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
-        $expectation1->with($expectedTimestamp, 0, null);
-        
+        $expectation1->with($expectedtimestamp, 0, null);
+
         $options = array(
             'days' => false,
             'timestamp' => false,
@@ -179,13 +179,13 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      */
     public function test_timelimit_and_verbose() {
         global $DB;
-        
+
         $this->resetAfterTest(true);
-        
+
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
-        
+
         $expectedstoptime = time() + 300;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
@@ -197,7 +197,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
                 ),
             $this->isInstanceOf('text_progress_trace')
         );
-        
+
         $options = array(
             'days' => 0,
             'timestamp' => 10000,
@@ -208,5 +208,5 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         );
         $helper->delete_attempts_cli_handler($options);
     }
-    
+
 }

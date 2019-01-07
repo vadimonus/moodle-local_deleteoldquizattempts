@@ -79,9 +79,9 @@ class helper {
     /**
      * Deletes unused hidden questions
      *
-     * @param int $timelimit
+     * @param int $stoptime
      * @param \progress_trace|null $trace
-     * @return int deleted questions count
+     * @return array deleted and skipped questions count
      */
     public function delete_unused_questions($stoptime = 0, $trace = null) {
         global $DB;
@@ -89,8 +89,8 @@ class helper {
         $where = "
             hidden = :hidden
             AND NOT EXISTS (
-                SELECT 1 
-                FROM {question_attempts} 
+                SELECT 1
+                FROM {question_attempts}
                 WHERE {question_attempts}.questionid = {question}.id
             )";
         $params = array('hidden' => true);
@@ -263,7 +263,7 @@ Examples:
         } else {
             $stoptime = 0;
         }
-        
+
         $this->delete_unused_questions($stoptime, $trace);
 
         if ($trace) {

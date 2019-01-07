@@ -62,7 +62,7 @@ Links
 
 Changes
 -------
-Release 2.0 (build 2019010600):
+Release 2.0 (build 2019010800):
 - Deletion of unused hidden questions.
 
 Release 1.0 (build 2019010600):

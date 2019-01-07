@@ -59,11 +59,11 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         global $DB;
 
         $this->resetAfterTest(true);
-        
+
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_unused_questions'));
         $helper = $mockbuilder->getMock();
-        
+
         $expectedstoptime = time() + 300;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_unused_questions');
@@ -88,20 +88,20 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
      */
     public function test_verbose() {
         global $DB;
-        
+
         $this->resetAfterTest(true);
-        
+
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
         $mockbuilder->setMethods(array('delete_unused_questions'));
         $helper = $mockbuilder->getMock();
-        
+
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_unused_questions');
         $expectation1->with(
             0,
             $this->isInstanceOf('text_progress_trace')
         );
-        
+
         $options = array(
             'timelimit' => false,
             'verbose' => true,
@@ -109,5 +109,5 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         );
         $helper->delete_questions_cli_handler($options);
     }
-    
+
 }
