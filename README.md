@@ -40,8 +40,8 @@ Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`
 
-Deleting unused hidden question with CLI
-----------------------------------------
+Deleting unused hidden questions with CLI
+-----------------------------------------
 
 Dispay help.
 
