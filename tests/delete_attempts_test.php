@@ -26,10 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
-
 /**
- * Unittests for locallib
+ * Unittests for delete_attempts
  *
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
@@ -38,7 +36,7 @@ require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
 class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
     /**
-     * Tests local_purgequestioncategory_delete_attempts
+     * Tests delete_attempts
      */
     public function test_delete_attempts() {
         global $DB;
@@ -77,19 +75,21 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
             'uniqueid' => $attempt
         ));
 
-        local_deleteoldquizattempts_delete_attempts($timestamp1);
+        $helper = new local_deleteoldquizattempts\helper();
+
+        $helper->delete_attempts($timestamp1);
         $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
         $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
         $this->assertNotEmpty($attempt1);
         $this->assertNotEmpty($attempt2);
 
-        local_deleteoldquizattempts_delete_attempts($timestamp2);
+        $helper->delete_attempts($timestamp2);
         $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
         $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
         $this->assertEmpty($attempt1);
         $this->assertNotEmpty($attempt2);
 
-        local_deleteoldquizattempts_delete_attempts($timestamp2 + 1);
+        $helper->delete_attempts($timestamp2 + 1);
         $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
         $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
         $this->assertEmpty($attempt1);
@@ -97,7 +97,7 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
     }
 
     /**
-     * Tests local_purgequestioncategory_delete_attempts call with trace and timelimit
+     * Tests delete_attempts call with trace and timelimit
      */
     public function test_delete_attempts_with_timelimit() {
         global $DB;
@@ -109,14 +109,10 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
         $expectation1 = $trace->expects($this->at(0));
         $expectation1->method('output');
         $expectation1->with($this->stringContains('Deleted 1 of 1'));
-        $expectation1->willReturnCallback(function () {
-            sleep(2);
-        });
 
         $expectation2 = $trace->expects($this->at(1));
         $expectation2->method('output');
         $expectation2->with($this->stringContains('Operation stopped due to time limit'));
-        $expectation2->willReturn(null);
 
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
@@ -134,6 +130,8 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
             'attempt' => 0,
             'uniqueid' => 0
         ));
-        local_deleteoldquizattempts_delete_attempts($now + 1, 1, $trace);
+
+        $helper = new local_deleteoldquizattempts\helper();
+        $helper->delete_attempts($now + 1, $now, $trace);
     }
 }

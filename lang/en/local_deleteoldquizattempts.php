@@ -24,11 +24,16 @@
 
 $string['attemptlifetime'] = 'Delete attempts older than';
 $string['attemptlifetime_help'] = 'Quiz аttempts that are older than specified value will be deleted with scheduler task. If "Do not delete old attempts" value is selected, you can still delete atttempts with CLI command.';
+$string['attemptsdeleted'] = 'Deleted {$a} quiz attempts.';
+$string['attemptsprogress'] = 'Deleted {$a->deleted} of {$a->total}';
+$string['deleteunusedhiddenquestions'] = 'Delete unused hidden questions';
+$string['deleteunusedhiddenquestions_help'] = 'Hidden questions are questions, that were logically deleted, but were not deleted physically, because they were referenced in some quiz attempts. After quiz attempts deletion, such questions are probably no longer required.';
 $string['donotdeleteonschedule'] = 'Do not delete old attempts';
 $string['maxexecutiontime'] = 'Max execution time';
 $string['maxexecutiontime_help'] = 'Deleting old attempts can cause high server load. This parameter limits the maximum execution time of scheduler task.';
 $string['maxexecutiontime_reached'] = 'Operation stopped due to time limit';
 $string['notlimited'] = 'Not limited';
 $string['pluginname'] = 'Old quiz and question attempts deletion';
-$string['progress'] = 'Deleted {$a->deleted} of {$a->total}';
+$string['questionsdeleted'] = 'Deleted {$a->deleted}, skipped {$a->skipped} unused hidden questions.';
+$string['questionsprogress'] = 'Deleted {$a->deleted}, skipped {$a->skipped} of {$a->total}';
 $string['taskname'] = 'Old quiz and question attempts deletion';

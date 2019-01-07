@@ -26,8 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
-
 /**
  * Unittests for task
  *
@@ -38,45 +36,126 @@ require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
 class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
 
     /**
-     * Tests task::execute
+     * All options disabled
      */
-    public function test_execute() {
+    public function test_all_disabled() {
+        global $DB;
+
+        $this->resetAfterTest(true);
+        
+        set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
+        set_config('maxexecutiontime', null, 'local_deleteoldquizattempts');
+        set_config('deleteunusedquestions', null, 'local_deleteoldquizattempts');
+
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('delete_attempts', 'delete_unused_questions'));
+        $helper = $mockbuilder->getMock();
+
+        $expectation1 = $helper->expects($this->never());
+        $expectation1->method('delete_attempts');
+
+        $expectation2 = $helper->expects($this->never());
+        $expectation2->method('delete_unused_questions');
+
+        $helper->task_handler();
+    }
+
+    /**
+     * Option attemptlifetime is enabled
+     */
+    public function test_delete_attempts_enabled() {
+        global $DB;
+
+        $this->resetAfterTest(true);
+        
+        set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');
+        set_config('maxexecutiontime', 0, 'local_deleteoldquizattempts');
+        set_config('deleteunusedquestions', 0, 'local_deleteoldquizattempts');
+
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('delete_attempts', 'delete_unused_questions'));
+        $helper = $mockbuilder->getMock();
+
+        $expectedTimestamp = time() - 30 * 3600 * 24;
+        $expectation1 = $helper->expects($this->once());
+        $expectation1->method('delete_attempts');
+        $expectation1->with(
+            $this->logicalAnd(
+                $this->greaterThanOrEqual($expectedTimestamp),
+                $this->lessThan($expectedTimestamp + 5)
+            ),
+            0
+        );
+        $expectation1->willReturn(99);
+
+        $expectation2 = $helper->expects($this->never());
+        $expectation2->method('delete_unused_questions');
+
+        ob_start();
+        $helper->task_handler();
+        $output = ob_get_clean();
+
+        $this->assertContains('Deleted 99 quiz attempts.', $output);
+    }
+
+    /**
+     * Option deleteunusedquestions is enabled
+     */
+    public function test_delete_questions_enabled() {
         global $DB;
 
         $this->resetAfterTest(true);
 
-        $course = $this->getDataGenerator()->create_course();
-        $user = $this->getDataGenerator()->create_user();
-        $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quiz = $generator->create_instance(array('course' => $course->id));
+        set_config('attemptlifetime', 0, 'local_deleteoldquizattempts');
+        set_config('maxexecutiontime', 0, 'local_deleteoldquizattempts');
+        set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
 
-        $timestamp = time() - 60 * 60 * 24 * 2; // Two days old.
-        $attemptid = $DB->insert_record('quiz_attempts', array(
-            'quiz' => $quiz->id,
-            'userid' => $user->id,
-            'state' => 'inprogress',
-            'timestart' => $timestamp,
-            'timecheckstate' => 0,
-            'layout' => '',
-            'attempt' => 0,
-            'uniqueid' => 0
-        ));
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('task_hander', 'delete_attempts', 'delete_unused_questions'));
+        $helper = $mockbuilder->getMock();
 
-        $task = new local_deleteoldquizattempts\task\delete_attempts_task();
+        $expectation1 = $helper->expects($this->never());
+        $expectation1->method('delete_attempts');
 
-        set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
-        set_config('max', null, 'local_deleteoldquizattempts');
-        $task->execute();
-        $attempt = $DB->get_record('quiz_attempts', array('id' => $attemptid));
-        $this->assertNotEmpty($attempt);
+        $expectation2 = $helper->expects($this->once());
+        $expectation2->method('delete_unused_questions');
+        $expectation2->willReturn(array(88, 77));
 
-        set_config('attemptlifetime', 1, 'local_deleteoldquizattempts');
         ob_start();
-        $task->execute();
+        $helper->task_handler();
         $output = ob_get_clean();
-        $attempt = $DB->get_record('quiz_attempts', array('id' => $attemptid));
-        $this->assertEmpty($attempt);
-        $this->assertContains('Deleted 1 old quiz attempts.', $output);
+
+        $this->assertContains('Deleted 88, skipped 77 unused hidden questions.', $output);
     }
 
+    /**
+     * Tests delete_unused_questions is not called then timeput on delete_attempts.
+     */
+    public function test_timeout_on_first() {
+        global $DB;
+
+        $this->resetAfterTest(true);
+
+        set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');
+        set_config('maxexecutiontime', 1, 'local_deleteoldquizattempts');
+        set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
+
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('delete_attempts', 'delete_unused_questions'));
+        $helper = $mockbuilder->getMock();
+
+        $expectation1 = $helper->expects($this->once());
+        $expectation1->method('delete_attempts');
+        $expectation1->willReturnCallback(function () {
+            sleep(2);
+            return 99;
+        });
+
+        $expectation2 = $helper->expects($this->never());
+        $expectation2->method('delete_unused_questions');
+
+        ob_start();
+        $helper->task_handler();
+        $output = ob_get_clean();
+    }
 }

@@ -15,8 +15,14 @@ Usage
 Navigate to plugin settings and specify maximum lifetime of quiz attempts. Older attempts will be automatically deleted
 with scheduler task.
 
-CLI usage
----------
+You can also specify to delete unused hidden questions. Hidden questions are questions, that were logically deleted,
+but were not deleted physically, because they were referenced in some quiz attempts. After quiz attempts deletion,
+such questions are probably no longer required.
+
+You can also delete quiz attempts and unused hidden questions with command line job.
+
+Deleting quiz attempts with CLI
+-------------------------------
 
 Dispay help.
 
@@ -34,6 +40,17 @@ Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`
 
+Deleting unused hidden question with CLI
+----------------------------------------
+
+Dispay help.
+
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_unused_questions.php --help`
+
+Delete unused hidden questions.
+
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timelimit=300 --verbose`
+
 Author
 ------
 - Vadim Dvorovenko (Vadimon@mail.ru)
@@ -45,5 +62,8 @@ Links
 
 Changes
 -------
+Release 2.0 (build 2019010600):
+- Deletion of unused hidden questions.
+
 Release 1.0 (build 2019010600):
 - Initial release.

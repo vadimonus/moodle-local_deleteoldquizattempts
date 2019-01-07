@@ -48,6 +48,14 @@ if ($hassiteconfig) {
         )
     );
     $settings->add(
+        new admin_setting_configcheckbox(
+            'local_deleteoldquizattempts/deleteunusedquestions',
+            new lang_string('deleteunusedhiddenquestions', 'local_deleteoldquizattempts'),
+            new lang_string('deleteunusedhiddenquestions_help', 'local_deleteoldquizattempts'),
+            0
+        )
+    );
+    $settings->add(
         new admin_setting_configselect(
             'local_deleteoldquizattempts/maxexecutiontime',
             new lang_string('maxexecutiontime', 'local_deleteoldquizattempts'),

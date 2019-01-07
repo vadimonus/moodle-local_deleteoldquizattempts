@@ -30,9 +30,6 @@ require_once($CFG->libdir . '/clilib.php');
 // Now get cli options.
 list($options, $unrecognized) = cli_get_params(
     array(
-        'days' => false,
-        'timestamp' => false,
-        'date' => false,
         'timelimit' => false,
         'verbose' => false,
         'help' => false
@@ -49,4 +46,4 @@ if ($unrecognized) {
 }
 
 $helper = new local_deleteoldquizattempts\helper();
-$helper->delete_attempts_cli_handler($options);
+$helper->delete_questions_cli_handler($options);

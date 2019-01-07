@@ -24,9 +24,9 @@
 
 namespace local_deleteoldquizattempts\task;
 
-defined('MOODLE_INTERNAL') || die();
+use local_deleteoldquizattempts;
 
-require_once($CFG->dirroot . '/local/deleteoldquizattempts/locallib.php');
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * Scheduler task.
@@ -51,15 +51,8 @@ class delete_attempts_task extends \core\task\scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        $lifetime = (int)get_config('local_deleteoldquizattempts', 'attemptlifetime');
-        $timelimit = (int)get_config('local_deleteoldquizattempts', 'maxexecutiontime');
-        if (empty($lifetime) || $lifetime < 0) {
-            return;
-        }
-
-        $timestamp = time() - ($lifetime * 3600 * 24);
-        $attempts = local_deleteoldquizattempts_delete_attempts($timestamp, $timelimit);
-        mtrace("    Deleted $attempts old quiz attempts.");
+        $helper = new local_deleteoldquizattempts\helper();
+        $helper->task_handler();
     }
 
 }
