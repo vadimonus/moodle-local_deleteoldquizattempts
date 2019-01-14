@@ -1,6 +1,8 @@
 Delete old quiz and question attempts Moodle plugin
 ===================================================
 
+[![Build Status](https://travis-ci.org/vadimonus/moodle-local_deleteoldquizattempts.svg?branch=master)](https://travis-ci.org/vadimonus/moodle-local_deleteoldquizattempts)
+
 Requirements
 ------------
 - Moodle 2.7 (build 2014051200) or later.
