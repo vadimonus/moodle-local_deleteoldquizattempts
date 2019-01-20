@@ -51,7 +51,7 @@ Dispay help.
 
 Delete unused hidden questions.
 
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --timelimit=300 --verbose`
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_unused_questions.php --timelimit=300 --verbose`
 
 Author
 ------
