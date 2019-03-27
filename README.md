@@ -64,8 +64,9 @@ Links
 
 Changes
 -------
-Release 2.1 (build 2019032800):
+Release 2.1 (build 2019032801):
 - Do not try o delete questions that are used by slots.
+- Privacy API support.
 
 Release 2.0 (build 2019010800):
 - Deletion of unused hidden questions.

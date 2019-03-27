@@ -34,6 +34,7 @@ $string['maxexecutiontime_help'] = 'Deleting old attempts can cause high server 
 $string['maxexecutiontime_reached'] = 'Operation stopped due to time limit';
 $string['notlimited'] = 'Not limited';
 $string['pluginname'] = 'Old quiz and question attempts deletion';
+$string['privacy:metadata'] = 'The plugin does not store any personal data.';
 $string['questionsdeleted'] = 'Deleted {$a->deleted}, skipped {$a->skipped} unused hidden questions.';
 $string['questionsprogress'] = 'Deleted {$a->deleted}, skipped {$a->skipped} of {$a->total}';
 $string['taskname'] = 'Old quiz and question attempts deletion';

@@ -22,13 +22,26 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_deleteoldquizattempts\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_deleteoldquizattempts';
-$plugin->version   = 2019032801;
-$plugin->release = '2.1';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->requires  = 2014051200; // Moodle 2.7.
-$plugin->dependencies = array(
-    'mod_quiz' => 2014051200,
-);
+/**
+ * Privacy API provider
+ *
+ * @package    local_deleteoldquizattempts
+ * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}

@@ -34,6 +34,7 @@ $string['maxexecutiontime_help'] = 'Удаление старых попыток
 $string['maxexecutiontime_reached'] = 'Операция остановлена из-за ограничения времени выполнения';
 $string['notlimited'] = 'Не ограничено';
 $string['pluginname'] = 'Удаление старых попыток тестирования и попыток ответов на вопросы';
+$string['privacy:metadata'] = 'Плагин не хранит персональные данные.';
 $string['questionsdeleted'] = 'Неиспользуемых скрытых вопросов удалено: {$a->deleted}, пропущено: {$a->skipped}';
 $string['questionsprogress'] = 'Удалено {$a->deleted}, пропущено {$a->skipped} из {$a->total}';
 $string['taskname'] = 'Удаление старых попыток тестирования и попыток ответов на вопросы';
