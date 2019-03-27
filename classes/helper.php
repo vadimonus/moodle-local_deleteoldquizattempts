@@ -92,6 +92,11 @@ class helper {
                 SELECT 1
                 FROM {question_attempts}
                 WHERE {question_attempts}.questionid = {question}.id
+            )
+            AND NOT EXISTS (
+                SELECT 1
+                FROM {quiz_slots}
+                WHERE {quiz_slots}.questionid = {question}.id
             )";
         $params = array('hidden' => true);
         if ($trace) {

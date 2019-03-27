@@ -64,6 +64,9 @@ Links
 
 Changes
 -------
+Release 2.1 (build 2019032800):
+- Do not try o delete questions that are used by slots.
+
 Release 2.0 (build 2019010800):
 - Deletion of unused hidden questions.
 
