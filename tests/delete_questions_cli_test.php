@@ -56,8 +56,6 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
      * Tests cli/delete_unused_questions.php --timelimit=300
      */
     public function test_timelimit() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
@@ -87,8 +85,6 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
      * Tests cli/delete_unused_questions.php --verbose
      */
     public function test_verbose() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');

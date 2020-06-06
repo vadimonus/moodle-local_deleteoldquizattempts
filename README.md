@@ -42,6 +42,14 @@ Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`
 
+Delete attempts for specified quiz (check id in _quiz table).
+
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --quizid=99
+
+Delete attempts for all quizzes in specified course.
+
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --courseid=99
+
 Deleting unused hidden questions with CLI
 -----------------------------------------
 
@@ -64,6 +72,9 @@ Links
 
 Changes
 -------
+Release 2.2 (build 2020060600):
+- CLI options to delete attempts for specified quizzes and courses
+
 Release 2.1 (build 2019032801):
 - Do not try o delete questions that are used by slots.
 - Privacy API support.

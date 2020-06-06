@@ -38,6 +38,16 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 class helper {
 
     /**
+     * @var int|null optional quiz id to filter attempts
+     */
+    public $quizid = null;
+
+    /**
+     * @var int|null optional course id to filter attempts
+     */
+    public $courseid = null;
+
+    /**
      * Deletes quiz attempts older than timestamp
      *
      * @param int $timestamp
@@ -48,13 +58,26 @@ class helper {
     public function delete_attempts($timestamp, $stoptime = 0, $trace = null) {
         global $DB;
 
+        $where = "timestart < :timestamp";
+        $params = array('timestamp' => $timestamp);
+        if ($this->courseid) {
+            $quizids = $DB->get_fieldset_select('quiz', 'id', 'course = :course', array(
+                'course' => $this->courseid
+            ));
+            list($quizwhere, $qizparams) = $DB->get_in_or_equal($quizids, SQL_PARAMS_NAMED, 'quiz');
+            $where .= ' AND quiz ' . $quizwhere;
+            $params = array_merge($params, $qizparams);
+        } else if ($this->quizid) {
+            $where .= ' AND quiz = :quizid';
+            $params = array_merge($params, array('quizid' => $this->quizid));
+        }
         if ($trace) {
-            $total = $DB->count_records_select('quiz_attempts', "timestart < :timestamp", array('timestamp' => $timestamp));
+            $total = $DB->count_records_select('quiz_attempts', $where, $params);
         } else {
             $total = 0;
         }
         $deleted = 0;
-        $rs = $DB->get_recordset_select('quiz_attempts', "timestart < :timestamp", array('timestamp' => $timestamp));
+        $rs = $DB->get_recordset_select('quiz_attempts', $where, $params);
         foreach ($rs as $attempt) {
             $quiz = $DB->get_record('quiz', array('id' => $attempt->quiz));
             quiz_delete_attempt($attempt, $quiz);
@@ -177,7 +200,11 @@ class helper {
             array_keys(array_filter($options)),
             array('days', 'timestamp', 'date')
         );
-        if ($options['help'] || count($exclusiveoptions) != 1) {
+        $exclusiveoptions2 = array_intersect(
+            array_keys(array_filter($options)),
+            array('courseid', 'quizid')
+        );
+        if (!empty($options['help']) || count($exclusiveoptions) != 1 || count($exclusiveoptions2) > 1) {
             $help = "Delete old quiz and question attempts
 
 Options:
@@ -185,6 +212,8 @@ Options:
 --timestamp=          Delete attempts that are created before specified UTC timestamp
 --date=               Delete attempts that are created before specified date.
                       Use \"YYYY-MM-DD HH:MM:SS\" format in UTC
+--courseid=           Delete only attempts for quizzes in course with specified id.
+--quizid=             Delete only attempts for quiz with specified id.
 --timelimit=          Stop execution after specified number of seconds
 -v, --verbose         Show progress
 -h, --help            Print out this help
@@ -203,23 +232,28 @@ Examples:
         // Ensure errors are well explained.
         set_debugging(DEBUG_DEVELOPER, true);
 
-        if ($options['days']) {
+        if (!empty($options['days'])) {
             $timestamp = time() - ((int)$options['days'] * 3600 * 24);
-        } else if ($options['timestamp']) {
+        } else if (!empty($options['timestamp'])) {
             $timestamp = (int)$options['timestamp'];
-        } else if ($options['date']) {
+        } else if (!empty($options['date'])) {
             $tz = new \DateTimeZone('UTC');
             $date = \DateTime::createFromFormat('Y-m-d H:i:s', $options['date'], $tz);
             $timestamp = $date->getTimestamp();
         }
-        if ($options['verbose']) {
+        if (!empty($options['quizid'])) {
+            $this->quizid = $options['quizid'];
+        } else if (!empty($options['courseid'])) {
+            $this->courseid = $options['courseid'];
+        }
+        if (!empty($options['verbose'])) {
             /** @var text_progress_trace $trace */
             $trace = new \text_progress_trace();
         } else {
             $trace = null;
         }
 
-        if ($options['timelimit']) {
+        if (!empty($options['timelimit'])) {
             $stoptime = time() + (int)$options['timelimit'];
         } else {
             $stoptime = 0;

@@ -34,6 +34,8 @@ list($options, $unrecognized) = cli_get_params(
         'timestamp' => false,
         'date' => false,
         'timelimit' => false,
+        'courseid' => false,
+        'quizid' => false,
         'verbose' => false,
         'help' => false
     ),

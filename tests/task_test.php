@@ -39,8 +39,6 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
      * All options disabled
      */
     public function test_all_disabled() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
@@ -102,8 +100,6 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
      * Option deleteunusedquestions is enabled
      */
     public function test_delete_questions_enabled() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', 0, 'local_deleteoldquizattempts');
@@ -132,8 +128,6 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
      * Tests delete_unused_questions is not called then timeput on delete_attempts.
      */
     public function test_timeout_on_first() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');

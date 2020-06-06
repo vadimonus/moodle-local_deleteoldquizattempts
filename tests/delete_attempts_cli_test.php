@@ -39,14 +39,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      * Tests cli/delete_attempts.php --help
      */
     public function test_help() {
-        $options = array(
-            'days' => false,
-            'timestamp' => false,
-            'date' => false,
-            'timelimit' => false,
-            'verbose' => false,
-            'help' => false
-        );
+        $options = array();
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts_cli_handler($options);
@@ -56,10 +49,6 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
 
         $options = array(
             'days' => 1,
-            'timestamp' => false,
-            'date' => false,
-            'timelimit' => false,
-            'verbose' => false,
             'help' => true
         );
         ob_start();
@@ -72,9 +61,16 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             'days' => 1,
             'timestamp' => 1,
             'date' => '2000-01-01 00:00:00',
-            'timelimit' => false,
-            'verbose' => false,
-            'help' => true
+        );
+        ob_start();
+        $helper = new local_deleteoldquizattempts\helper();
+        $helper->delete_attempts_cli_handler($options);
+        $output = ob_get_clean();
+        $this->assertContains('Print out this help', $output);
+
+        $options = array(
+            'quizid' => 99,
+            'courseid' => 88,
         );
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
@@ -87,8 +83,6 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      * Tests cli/delete_attempts.php --days=3
      */
     public function test_days() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
@@ -109,11 +103,6 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
 
         $options = array(
             'days' => 3,
-            'timestamp' => false,
-            'date' => false,
-            'timelimit' => false,
-            'verbose' => false,
-            'help' => false
         );
         $helper->delete_attempts_cli_handler($options);
     }
@@ -122,8 +111,6 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      * Tests cli/delete_attempts.php --timestamp=10000
      */
     public function test_timestamp() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
@@ -136,12 +123,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $expectation1->with(10000, 0, null);
 
         $options = array(
-            'days' => false,
             'timestamp' => 10000,
-            'date' => false,
-            'timelimit' => false,
-            'verbose' => false,
-            'help' => false
         );
         $helper->delete_attempts_cli_handler($options);
     }
@@ -150,8 +132,6 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      * Tests cli/delete_attempts.php --date="2000-01-01 00:00:00"
      */
     public function test_date() {
-        global $DB;
-
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
@@ -164,12 +144,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $expectation1->with($expectedtimestamp, 0, null);
 
         $options = array(
-            'days' => false,
-            'timestamp' => false,
             'date' => '2000-01-01 00:00:00',
-            'timelimit' => false,
-            'verbose' => false,
-            'help' => false
         );
         $helper->delete_attempts_cli_handler($options);
     }
@@ -199,14 +174,52 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         );
 
         $options = array(
-            'days' => 0,
             'timestamp' => 10000,
-            'date' => false,
             'timelimit' => 300,
             'verbose' => true,
-            'help' => false
         );
         $helper->delete_attempts_cli_handler($options);
     }
 
+    /**
+     * Tests cli/delete_attempts.php --days=9 --quizid=999
+     */
+    public function test_quizid() {
+        $this->resetAfterTest(true);
+
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('delete_attempts'));
+        $helper = $mockbuilder->getMock();
+
+        $expectation1 = $helper->expects($this->once());
+        $expectation1->method('delete_attempts');
+
+        $options = array(
+            'days' => 9,
+            'quizid' => 999,
+        );
+        $helper->delete_attempts_cli_handler($options);
+        $this->assertEquals(999, $helper->quizid);
+    }
+
+    /**
+     * Tests cli/delete_attempts.php --days=8 --courseid=888
+     */
+    public function test_courseid() {
+        $this->resetAfterTest(true);
+
+        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder->setMethods(array('delete_attempts'));
+        $helper = $mockbuilder->getMock();
+
+        $expectation1 = $helper->expects($this->once());
+        $expectation1->method('delete_attempts');
+
+        $options = array(
+            'days' => 8,
+            'courseid' => 888,
+        );
+        $helper->delete_attempts_cli_handler($options);
+        $this->assertEquals(888, $helper->courseid);
+    }
 }
