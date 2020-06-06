@@ -2,9 +2,6 @@ language: php
 
 sudo: false
 
-services:
-  - mysql
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -14,12 +11,18 @@ matrix:
   include:
     - php: 5.6
       env: DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE V2=false
+      services:
+      - mysql
 
     - php: 7.0
       env: DB=mysqli MOODLE_BRANCH=MOODLE_35_STABLE V2=true
+      services:
+        - mysql
 
     - php: 7.4
       env: DB=mysqli MOODLE_BRANCH=master V2=true
+      services:
+        - mysql
 
     - php: 7.4
       env: DB=pgsql MOODLE_BRANCH=master V2=true
