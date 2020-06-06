@@ -42,13 +42,13 @@ Delete attempts that are created before 2018-01-01 00:00:00 (UTC).
 
 `sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --date="2018-01-01 00:00:00"`
 
-Delete attempts for specified quiz (check id in _quiz table).
+Delete attempts for specified quiz (check id in *_quiz table).
 
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --quizid=99
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --quizid=99`
 
 Delete attempts for all quizzes in specified course.
 
-`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --courseid=99
+`sudo -u www-data /usr/bin/php local/deleteoldquizattempts/cli/delete_attempts.php --days=90 --courseid=99`
 
 Deleting unused hidden questions with CLI
 -----------------------------------------
