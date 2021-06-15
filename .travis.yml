@@ -9,34 +9,40 @@ cache:
 
 matrix:
   include:
-    - php: 5.6
-      env: DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE V2=false
-      services:
-      - mysql
-
-    - php: 7.0
-      env: DB=mysqli MOODLE_BRANCH=MOODLE_35_STABLE V2=true
-      services:
-        - mysql
-
+#    - php: 5.6
+#      env: DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE V3=false
+#      services:
+#      - mysql
+#
+#    - php: 7.0
+#      env: DB=mysqli MOODLE_BRANCH=MOODLE_35_STABLE V3=true
+#      services:
+#        - mysql
+#
+#    - php: 7.2
+#      env: DB=mysqli MOODLE_BRANCH=MOODLE_39_STABLE V3=true
+#      services:
+#        - mysql
+#
+#    - php: 7.4
+#      env: DB=mysqli MOODLE_BRANCH=master V3=true
+#      services:
+#        - mysql
+#
     - php: 7.4
-      env: DB=mysqli MOODLE_BRANCH=master V2=true
-      services:
-        - mysql
-
-    - php: 7.4
-      env: DB=pgsql MOODLE_BRANCH=master V2=true
+      env: DB=pgsql MOODLE_BRANCH=master V3=true
       addons:
-        postgresql: 9.5
+        postgresql: 9.6
 
 
 before_install:
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
+  - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini
   - cd ../..
   - if [ -n "$GH_TOKEN" ]; then composer config -g github-oauth.github.com ${GH_TOKEN}; fi;
-  - if [ "$V2" = false ]; then composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^1; fi
-  - if [ "$V2" = true ]; then composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2; fi
-  - if [ "$V2" = true ]; then nvm install stable; fi
+  - if [ "$V3" = false ]; then composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^1; fi
+  - if [ "$V3" = true ]; then composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3; fi
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
