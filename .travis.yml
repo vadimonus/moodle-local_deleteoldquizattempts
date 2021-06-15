@@ -28,7 +28,7 @@ matrix:
 #      env: DB=mysqli MOODLE_BRANCH=master V3=true
 #      services:
 #        - mysql
-#
+
     - php: 7.4
       env: DB=pgsql MOODLE_BRANCH=master V3=true
       addons:
