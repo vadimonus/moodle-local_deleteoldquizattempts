@@ -86,7 +86,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = time() - 3 * 3600 * 24;
@@ -114,7 +114,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = 10000;
@@ -135,7 +135,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
@@ -158,7 +158,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectedstoptime = time() + 300;
@@ -188,7 +188,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());
@@ -209,7 +209,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(array('delete_attempts'));
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());

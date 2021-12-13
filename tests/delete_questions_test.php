@@ -70,7 +70,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
         $expectation1 = $trace->expects($this->at(0));
         $expectation1->method('output');

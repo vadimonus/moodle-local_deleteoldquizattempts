@@ -59,7 +59,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_unused_questions'));
+        $mockbuilder->onlyMethods(array('delete_unused_questions'));
         $helper = $mockbuilder->getMock();
 
         $expectedstoptime = time() + 300;
@@ -88,7 +88,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->setMethods(array('delete_unused_questions'));
+        $mockbuilder->onlyMethods(array('delete_unused_questions'));
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());

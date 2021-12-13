@@ -104,7 +104,7 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
         $expectation1 = $trace->expects($this->atLeastOnce());
         $expectation1->method('output');
@@ -143,7 +143,7 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
         $expectation1 = $trace->expects($this->at(0));
         $expectation1->method('output');
@@ -181,7 +181,7 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->setMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
         $expectation1 = $trace->expects($this->at(0));
         $expectation1->method('output');
