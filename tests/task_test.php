@@ -93,7 +93,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         $helper->task_handler();
         $output = ob_get_clean();
 
-        $this->assertContains('Deleted 99 quiz attempts.', $output);
+        $this->assertStringContainsString('Deleted 99 quiz attempts.', $output);
     }
 
     /**
@@ -121,7 +121,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         $helper->task_handler();
         $output = ob_get_clean();
 
-        $this->assertContains('Deleted 88, skipped 77 unused hidden questions.', $output);
+        $this->assertStringContainsString('Deleted 88, skipped 77 unused hidden questions.', $output);
     }
 
     /**
