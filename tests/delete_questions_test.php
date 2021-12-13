@@ -72,13 +72,13 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
 
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
-        $expectation1 = $trace->expects($this->at(0));
-        $expectation1->method('output');
-        $expectation1->with($this->stringContains('Deleted 1, skipped 0 of 1'));
-
-        $expectation2 = $trace->expects($this->at(1));
-        $expectation2->method('output');
-        $expectation2->with($this->stringContains('Operation stopped due to time limit'));
+        $trace
+            ->expects($this->atLeast(2))
+            ->method('output')
+            ->withConsecutive(
+                [$this->stringContains('Deleted 1, skipped 0 of 1')],
+                [$this->stringContains('Operation stopped due to time limit')]
+            );
 
         $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $questiongenerator->create_question_category();

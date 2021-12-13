@@ -33,7 +33,7 @@ global $CFG;
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
+class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_testcase {
 
     /**
      * Tests delete_attempts
@@ -106,13 +106,13 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
-        $expectation1 = $trace->expects($this->atLeastOnce());
-        $expectation1->method('output');
-        $expectation1->with($this->stringContains('Deleted 1 of 1'));
-
-        $expectation2 = $trace->expects($this->at(1));
-        $expectation2->method('output');
-        $expectation2->with($this->stringContains('Operation stopped due to time limit'));
+        $trace
+            ->expects($this->atLeast(2))
+            ->method('output')
+            ->withConsecutive(
+                [$this->stringContains('Deleted 1 of 1')],
+                [$this->stringContains('Operation stopped due to time limit')]
+            );
 
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
@@ -145,7 +145,7 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
-        $expectation1 = $trace->expects($this->at(0));
+        $expectation1 = $trace->expects($this->atLeastOnce());
         $expectation1->method('output');
         $expectation1->with($this->stringContains('Deleted 1 of 1'));
 
@@ -183,9 +183,12 @@ class local_deleteoldquizattempts_locallib_testcase extends advanced_testcase {
 
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
 
-        $expectation1 = $trace->expects($this->at(0));
-        $expectation1->method('output');
-        $expectation1->with($this->stringContains('Deleted 1 of 2'));
+        $trace
+            ->expects($this->atLeastOnce())
+            ->method('output')
+            ->withConsecutive(
+                [$this->stringContains('Deleted 1 of 2')]
+            );
 
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
