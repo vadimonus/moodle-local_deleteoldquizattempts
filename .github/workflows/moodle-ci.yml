@@ -1,4 +1,4 @@
-name: Moodle Plugin CI
+name: moodle-plugin-ci
 
 on: [push, pull_request]
 
@@ -27,9 +27,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.3', '7.4', '8.0']
-        moodle-branch: ['MOODLE_311_STABLE']
-        database: [pgsql, mariadb]
+        include:
+          - php: '7.0'
+            moodle-branch: 'MOODLE_35_STABLE'
+            database: mariadb
+          - php: '7.2'
+            moodle-branch: 'MOODLE_39_STABLE'
+            database: mariadb
+          - php: '7.3'
+            moodle-branch: 'MOODLE_311_STABLE'
+            database: mariadb
+          - php: '7.4'
+            moodle-branch: 'master'
+            database: mariadb
+          - php: '8.0'
+            moodle-branch: 'master'
+            database: mariadb
+          - php: '8.0'
+            moodle-branch: 'master'
+            database: pgsql
+#      matrix:
+#        php: ['7.3', '7.4', '8.0']
+#        moodle-branch: ['MOODLE_311_STABLE', 'master']
+#        database: [pgsql, mariadb]
 
     steps:
       - name: Check out repository code

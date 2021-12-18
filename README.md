@@ -1,7 +1,7 @@
 Delete old quiz and question attempts Moodle plugin
 ===================================================
 
-[![Build Status](https://github.com/vadimonus/moodle-local_deleteoldquizattempts/workflows/moodle-ci/badge.svg)](https://github.com/vadimonus/moodle-local_deleteoldquizattempts/actions)
+[![Build Status](https://github.com/vadimonus/moodle-local_deleteoldquizattempts/workflows/moodle-plugin-ci/badge.svg)](https://github.com/vadimonus/moodle-local_deleteoldquizattempts/actions)
 
 Requirements
 ------------
