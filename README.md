@@ -72,8 +72,11 @@ Links
 
 Changes
 -------
+Release 2.2.1 (build 2022010200):
+- Added option for 3, 7 and 15 days.
+
 Release 2.2 (build 2020060600):
-- CLI options to delete attempts for specified quizzes and courses
+- CLI options to delete attempts for specified quizzes and courses.
 
 Release 2.1 (build 2019032801):
 - Do not try o delete questions that are used by slots.
