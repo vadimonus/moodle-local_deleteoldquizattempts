@@ -79,7 +79,7 @@ Release 2.2 (build 2020060600):
 - CLI options to delete attempts for specified quizzes and courses.
 
 Release 2.1 (build 2019032801):
-- Do not try o delete questions that are used by slots.
+- Do not try to delete questions that are used by slots.
 - Privacy API support.
 
 Release 2.0 (build 2019010800):
