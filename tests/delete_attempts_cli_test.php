@@ -49,7 +49,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
 
         $options = array(
             'days' => 1,
-            'help' => true
+            'help' => true,
         );
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();

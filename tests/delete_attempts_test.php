@@ -59,7 +59,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => $attempt,
-            'uniqueid' => $attempt
+            'uniqueid' => $attempt,
         ));
 
         $timestamp2 = $now - 1000;
@@ -72,7 +72,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => $attempt,
-            'uniqueid' => $attempt
+            'uniqueid' => $attempt,
         ));
 
         $helper = new local_deleteoldquizattempts\helper();
@@ -128,7 +128,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => 0,
-            'uniqueid' => 0
+            'uniqueid' => 0,
         ));
 
         $helper = new local_deleteoldquizattempts\helper();
@@ -163,7 +163,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => 0,
-            'uniqueid' => 0
+            'uniqueid' => 0,
         ));
 
         $helper = new local_deleteoldquizattempts\helper();
@@ -205,7 +205,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => 0,
-            'uniqueid' => 0
+            'uniqueid' => 0,
         ));
         $attemptid2 = $DB->insert_record('quiz_attempts', array(
             'quiz' => $quiz2->id,
@@ -215,7 +215,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'timecheckstate' => 0,
             'layout' => '',
             'attempt' => 0,
-            'uniqueid' => 1
+            'uniqueid' => 1,
         ));
 
         $helper = new local_deleteoldquizattempts\helper();

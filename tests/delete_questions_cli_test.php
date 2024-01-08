@@ -42,7 +42,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $options = array(
             'timelimit' => false,
             'verbose' => false,
-            'help' => true
+            'help' => true,
         );
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
@@ -76,7 +76,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $options = array(
             'timelimit' => 300,
             'verbose' => false,
-            'help' => false
+            'help' => false,
         );
         $helper->delete_questions_cli_handler($options);
     }
@@ -101,7 +101,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $options = array(
             'timelimit' => false,
             'verbose' => true,
-            'help' => false
+            'help' => false,
         );
         $helper->delete_questions_cli_handler($options);
     }

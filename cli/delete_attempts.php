@@ -37,11 +37,11 @@ list($options, $unrecognized) = cli_get_params(
         'courseid' => false,
         'quizid' => false,
         'verbose' => false,
-        'help' => false
+        'help' => false,
     ),
     array(
         'h' => 'help',
-        'v' => 'verbose'
+        'v' => 'verbose',
     )
 );
 

@@ -32,11 +32,11 @@ list($options, $unrecognized) = cli_get_params(
     array(
         'timelimit' => false,
         'verbose' => false,
-        'help' => false
+        'help' => false,
     ),
     array(
         'h' => 'help',
-        'v' => 'verbose'
+        'v' => 'verbose',
     )
 );
 

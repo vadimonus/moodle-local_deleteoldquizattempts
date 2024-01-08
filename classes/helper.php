@@ -62,7 +62,7 @@ class helper {
         $params = array('timestamp' => $timestamp);
         if ($this->courseid) {
             $quizids = $DB->get_fieldset_select('quiz', 'id', 'course = :course', array(
-                'course' => $this->courseid
+                'course' => $this->courseid,
             ));
             list($quizwhere, $qizparams) = $DB->get_in_or_equal($quizids, SQL_PARAMS_NAMED, 'quiz');
             $where .= ' AND quiz ' . $quizwhere;
@@ -184,7 +184,7 @@ class helper {
             list($deleted, $skipped) = $this->delete_unused_questions($stoptime);
             mtrace('    ' . get_string('questionsdeleted', 'local_deleteoldquizattempts', array(
                 'deleted' => $deleted,
-                'skipped' => $skipped
+                'skipped' => $skipped,
             )));
         }
     }
@@ -247,7 +247,7 @@ Examples:
             $this->courseid = $options['courseid'];
         }
         if (!empty($options['verbose'])) {
-            /** @var text_progress_trace $trace */
+            /** @var \text_progress_trace $trace */
             $trace = new \text_progress_trace();
         } else {
             $trace = null;
@@ -291,7 +291,7 @@ Examples:
         set_debugging(DEBUG_DEVELOPER, true);
 
         if ($options['verbose']) {
-            /** @var text_progress_trace $trace */
+            /** @var \text_progress_trace $trace */
             $trace = new \text_progress_trace();
         } else {
             $trace = null;

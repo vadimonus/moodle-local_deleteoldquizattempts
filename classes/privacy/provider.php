@@ -22,9 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
 namespace local_deleteoldquizattempts\privacy;
 
-defined('MOODLE_INTERNAL') || die();
+use core_privacy\local\legacy_polyfill;
+use core_privacy\local\metadata\null_provider;
 
 /**
  * Privacy API provider
@@ -33,9 +36,9 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
+class provider implements null_provider {
 
-    use \core_privacy\local\legacy_polyfill;
+    use legacy_polyfill;
 
     /**
      * Get the language string identifier with the component's language

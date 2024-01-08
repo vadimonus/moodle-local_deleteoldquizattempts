@@ -24,9 +24,8 @@
 
 namespace local_deleteoldquizattempts\task;
 
-use local_deleteoldquizattempts;
-
-defined('MOODLE_INTERNAL') || die();
+use core\task\scheduled_task;
+use local_deleteoldquizattempts\helper;
 
 /**
  * Scheduler task.
@@ -35,7 +34,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class delete_attempts_task extends \core\task\scheduled_task {
+class delete_attempts_task extends scheduled_task {
 
     /**
      * Get a descriptive name for this task (shown to admins).
@@ -51,7 +50,7 @@ class delete_attempts_task extends \core\task\scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->task_handler();
     }
 
