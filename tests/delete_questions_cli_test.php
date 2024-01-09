@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace local_deleteoldquizattempts;
 
-global $CFG;
+use advanced_testcase;
 
 /**
  * Unittests for CLI
@@ -33,7 +33,7 @@ global $CFG;
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced_testcase {
+class delete_questions_cli_test extends advanced_testcase {
 
     /**
      * Tests cli/delete_unused_questions.php --help
@@ -45,7 +45,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
             'help' => true,
         ];
         ob_start();
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_questions_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Delete unused hidden questions', $output);
@@ -58,7 +58,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
     public function test_timelimit() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
@@ -87,7 +87,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
     public function test_verbose() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 

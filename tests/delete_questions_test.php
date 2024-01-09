@@ -22,6 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_deleteoldquizattempts;
+
+use advanced_testcase;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -35,7 +39,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_delete_questions_testcase extends advanced_testcase {
+class delete_questions_test extends advanced_testcase {
 
     /**
      * Tests delete_attempts
@@ -54,7 +58,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         );
         $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         [$deleted, $skipped] = $helper->delete_unused_questions();
         $question = $DB->get_record('question', ['id' => $question->id]);
         $this->assertEmpty($question);
@@ -89,7 +93,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
             );
         $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         [$deleted, $skipped] = $helper->delete_unused_questions(time(), $trace);
         $question = $DB->get_record('question', ['id' => $question->id]);
         $this->assertEmpty($question);

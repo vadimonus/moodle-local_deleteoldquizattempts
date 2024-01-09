@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace local_deleteoldquizattempts;
 
-global $CFG;
+use advanced_testcase;
 
 /**
  * Unittests for delete_attempts
@@ -33,7 +33,7 @@ global $CFG;
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_testcase {
+class delete_attempts_test extends advanced_testcase {
 
     /**
      * Tests delete_attempts
@@ -75,7 +75,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'uniqueid' => $attempt,
         ]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
 
         $helper->delete_attempts($timestamp1);
         $attempt1 = $DB->get_record('quiz_attempts', ['id' => $attemptid1]);
@@ -131,7 +131,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'uniqueid' => 0,
         ]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_attempts($now + 1, $now, $trace);
     }
 
@@ -166,7 +166,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'uniqueid' => 0,
         ]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->quizid = $quiz->id;
         $helper->delete_attempts($now + 1, 0, $trace);
         $attempt = $DB->get_record('quiz_attempts', ['id' => $attemptid]);
@@ -218,7 +218,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'uniqueid' => 1,
         ]);
 
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->courseid = $course->id;
         $helper->delete_attempts($now + 1, 0, $trace);
 

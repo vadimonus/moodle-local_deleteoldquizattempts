@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace local_deleteoldquizattempts;
 
-global $CFG;
+use advanced_testcase;
 
 /**
  * Unittests for task
@@ -33,7 +33,7 @@ global $CFG;
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
+class task_test extends advanced_testcase {
 
     /**
      * All options disabled
@@ -45,7 +45,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('maxexecutiontime', null, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', null, 'local_deleteoldquizattempts');
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
@@ -70,7 +70,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('maxexecutiontime', 0, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', 0, 'local_deleteoldquizattempts');
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
@@ -106,7 +106,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('maxexecutiontime', 0, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
@@ -134,7 +134,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('maxexecutiontime', 1, 'local_deleteoldquizattempts');
         set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 

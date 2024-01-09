@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace local_deleteoldquizattempts;
 
-global $CFG;
+use advanced_testcase;
 
 /**
  * Unittests for CLI
@@ -33,7 +33,7 @@ global $CFG;
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_testcase {
+class delete_attempts_cli_test extends advanced_testcase {
 
     /**
      * Tests cli/delete_attempts.php --help
@@ -41,7 +41,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_help() {
         $options = [];
         ob_start();
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Delete old quiz and question attempts', $output);
@@ -52,7 +52,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             'help' => true,
         ];
         ob_start();
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Print out this help', $output);
@@ -63,7 +63,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             'date' => '2000-01-01 00:00:00',
         ];
         ob_start();
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Print out this help', $output);
@@ -73,7 +73,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             'courseid' => 88,
         ];
         ob_start();
-        $helper = new local_deleteoldquizattempts\helper();
+        $helper = new helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Print out this help', $output);
@@ -85,7 +85,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_days() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
@@ -113,7 +113,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_timestamp() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
@@ -134,7 +134,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_date() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
@@ -157,7 +157,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
 
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
@@ -187,7 +187,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_quizid() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
@@ -208,7 +208,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
     public function test_courseid() {
         $this->resetAfterTest(true);
 
-        $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
+        $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
