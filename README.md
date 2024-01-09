@@ -5,7 +5,7 @@ Delete old quiz and question attempts Moodle plugin
 
 Requirements
 ------------
-- Moodle 2.7 (build 2014051200) or later.
+- Moodle 4.0 (build 2022041900) or later.
 
 Installation
 ------------
@@ -72,6 +72,10 @@ Links
 
 Changes
 -------
+Release 3.0.0 (build 2024XXXXXX):
+- Moodle 4 support.
+- Dropped support for Moodle versions lower than 4.0 due to changes in core.
+
 Release 2.2.1 (build 2022010200):
 - Added option for 3, 7 and 15 days.
 

@@ -42,12 +42,12 @@ jobs:
           - php: '8.2'
             moodle-branch: 'MOODLE_403_STABLE'
             database: mariadb
-          # Some min versions (plugin supports much lower versions, but there are no CI for them)
+          # Some min versions (CI does not support lower than 7.4)
           - php: '7.4'
-            moodle-branch: 'MOODLE_311_STABLE'
+            moodle-branch: 'MOODLE_400_STABLE'
             database: mariadb
           - php: '7.4'
-            moodle-branch: 'MOODLE_311_STABLE'
+            moodle-branch: 'MOODLE_400_STABLE'
             database: pgsql
 
     steps:

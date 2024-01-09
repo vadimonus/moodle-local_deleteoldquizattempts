@@ -26,9 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_deleteoldquizattempts';
 $plugin->version   = 2022010200;
-$plugin->release = '2.2.1';
+$plugin->release = '3.0.0';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->requires  = 2014051200; // Moodle 2.7.
+$plugin->requires  = 2022041900; // Moodle 4.0.
 $plugin->dependencies = [
-    'mod_quiz' => 2014051200,
+    'mod_quiz' => 2022041900,
 ];
