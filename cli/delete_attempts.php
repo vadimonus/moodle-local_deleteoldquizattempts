@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_deleteoldquizattempts;
+
 define('CLI_SCRIPT', true);
 
 require_once(__DIR__ . '/../../../config.php');
@@ -50,5 +52,5 @@ if ($unrecognized) {
     cli_error(get_string('cliunknowoption', 'admin', $unrecognized), 2);
 }
 
-$helper = new local_deleteoldquizattempts\helper();
+$helper = new helper();
 $helper->delete_attempts_cli_handler($options);

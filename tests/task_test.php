@@ -32,6 +32,7 @@ use advanced_testcase;
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \local_deleteoldquizattempts\helper::task_handler
  */
 class task_test extends advanced_testcase {
 

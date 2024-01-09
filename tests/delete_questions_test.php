@@ -38,6 +38,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
  * @package    local_deleteoldquizattempts
  * @copyright  2019 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \local_deleteoldquizattempts\helper::delete_unused_questions
  */
 class delete_questions_test extends advanced_testcase {
 
