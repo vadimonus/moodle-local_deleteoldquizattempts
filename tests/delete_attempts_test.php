@@ -46,12 +46,12 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quiz = $generator->create_instance(array('course' => $course->id));
+        $quiz = $generator->create_instance(['course' => $course->id]);
 
         $now = time();
         $attempt = 0;
         $timestamp1 = $now - 2000;
-        $attemptid1 = $DB->insert_record('quiz_attempts', array(
+        $attemptid1 = $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -60,11 +60,11 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => $attempt,
             'uniqueid' => $attempt,
-        ));
+        ]);
 
         $timestamp2 = $now - 1000;
         $attempt++;
-        $attemptid2 = $DB->insert_record('quiz_attempts', array(
+        $attemptid2 = $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -73,25 +73,25 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => $attempt,
             'uniqueid' => $attempt,
-        ));
+        ]);
 
         $helper = new local_deleteoldquizattempts\helper();
 
         $helper->delete_attempts($timestamp1);
-        $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
-        $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
+        $attempt1 = $DB->get_record('quiz_attempts', ['id' => $attemptid1]);
+        $attempt2 = $DB->get_record('quiz_attempts', ['id' => $attemptid2]);
         $this->assertNotEmpty($attempt1);
         $this->assertNotEmpty($attempt2);
 
         $helper->delete_attempts($timestamp2);
-        $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
-        $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
+        $attempt1 = $DB->get_record('quiz_attempts', ['id' => $attemptid1]);
+        $attempt2 = $DB->get_record('quiz_attempts', ['id' => $attemptid2]);
         $this->assertEmpty($attempt1);
         $this->assertNotEmpty($attempt2);
 
         $helper->delete_attempts($timestamp2 + 1);
-        $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
-        $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
+        $attempt1 = $DB->get_record('quiz_attempts', ['id' => $attemptid1]);
+        $attempt2 = $DB->get_record('quiz_attempts', ['id' => $attemptid2]);
         $this->assertEmpty($attempt1);
         $this->assertEmpty($attempt2);
     }
@@ -104,7 +104,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
             ->expects($this->atLeast(2))
@@ -117,10 +117,10 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quiz = $generator->create_instance(array('course' => $course->id));
+        $quiz = $generator->create_instance(['course' => $course->id]);
 
         $now = time();
-        $DB->insert_record('quiz_attempts', array(
+        $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -129,7 +129,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => 0,
             'uniqueid' => 0,
-        ));
+        ]);
 
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts($now + 1, $now, $trace);
@@ -143,7 +143,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $expectation1 = $trace->expects($this->atLeastOnce());
         $expectation1->method('output');
@@ -152,10 +152,10 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quiz = $generator->create_instance(array('course' => $course->id));
+        $quiz = $generator->create_instance(['course' => $course->id]);
 
         $now = time();
-        $attemptid = $DB->insert_record('quiz_attempts', array(
+        $attemptid = $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -164,12 +164,12 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => 0,
             'uniqueid' => 0,
-        ));
+        ]);
 
         $helper = new local_deleteoldquizattempts\helper();
         $helper->quizid = $quiz->id;
         $helper->delete_attempts($now + 1, 0, $trace);
-        $attempt = $DB->get_record('quiz_attempts', array('id' => $attemptid));
+        $attempt = $DB->get_record('quiz_attempts', ['id' => $attemptid]);
         $this->assertEmpty($attempt);
     }
 
@@ -181,7 +181,7 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
             ->expects($this->atLeastOnce())
@@ -193,11 +193,11 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
-        $quiz1 = $generator->create_instance(array('course' => $course->id));
-        $quiz2 = $generator->create_instance(array('course' => $course->id));
+        $quiz1 = $generator->create_instance(['course' => $course->id]);
+        $quiz2 = $generator->create_instance(['course' => $course->id]);
 
         $now = time();
-        $attemptid1 = $DB->insert_record('quiz_attempts', array(
+        $attemptid1 = $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz1->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -206,8 +206,8 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => 0,
             'uniqueid' => 0,
-        ));
-        $attemptid2 = $DB->insert_record('quiz_attempts', array(
+        ]);
+        $attemptid2 = $DB->insert_record('quiz_attempts', [
             'quiz' => $quiz2->id,
             'userid' => $user->id,
             'state' => 'inprogress',
@@ -216,15 +216,15 @@ class local_deleteoldquizattempts_delete_attempts_testcase extends advanced_test
             'layout' => '',
             'attempt' => 0,
             'uniqueid' => 1,
-        ));
+        ]);
 
         $helper = new local_deleteoldquizattempts\helper();
         $helper->courseid = $course->id;
         $helper->delete_attempts($now + 1, 0, $trace);
 
-        $attempt1 = $DB->get_record('quiz_attempts', array('id' => $attemptid1));
+        $attempt1 = $DB->get_record('quiz_attempts', ['id' => $attemptid1]);
         $this->assertEmpty($attempt1);
-        $attempt2 = $DB->get_record('quiz_attempts', array('id' => $attemptid2));
+        $attempt2 = $DB->get_record('quiz_attempts', ['id' => $attemptid2]);
         $this->assertEmpty($attempt2);
     }
 }

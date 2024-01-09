@@ -39,7 +39,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
      * Tests cli/delete_attempts.php --help
      */
     public function test_help() {
-        $options = array();
+        $options = [];
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts_cli_handler($options);
@@ -47,31 +47,31 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->assertStringContainsString('Delete old quiz and question attempts', $output);
         $this->assertStringContainsString('Print out this help', $output);
 
-        $options = array(
+        $options = [
             'days' => 1,
             'help' => true,
-        );
+        ];
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Print out this help', $output);
 
-        $options = array(
+        $options = [
             'days' => 1,
             'timestamp' => 1,
             'date' => '2000-01-01 00:00:00',
-        );
+        ];
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts_cli_handler($options);
         $output = ob_get_clean();
         $this->assertStringContainsString('Print out this help', $output);
 
-        $options = array(
+        $options = [
             'quizid' => 99,
             'courseid' => 88,
-        );
+        ];
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_attempts_cli_handler($options);
@@ -86,7 +86,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = time() - 3 * 3600 * 24;
@@ -101,9 +101,9 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             null
         );
 
-        $options = array(
+        $options = [
             'days' => 3,
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
     }
 
@@ -114,7 +114,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = 10000;
@@ -122,9 +122,9 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $expectation1->method('delete_attempts');
         $expectation1->with(10000, 0, null);
 
-        $options = array(
+        $options = [
             'timestamp' => 10000,
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
     }
 
@@ -135,7 +135,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
@@ -143,9 +143,9 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $expectation1->method('delete_attempts');
         $expectation1->with($expectedtimestamp, 0, null);
 
-        $options = array(
+        $options = [
             'date' => '2000-01-01 00:00:00',
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
     }
 
@@ -158,7 +158,7 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectedstoptime = time() + 300;
@@ -173,11 +173,11 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
             $this->isInstanceOf('text_progress_trace')
         );
 
-        $options = array(
+        $options = [
             'timestamp' => 10000,
             'timelimit' => 300,
             'verbose' => true,
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
     }
 
@@ -188,16 +188,16 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
 
-        $options = array(
+        $options = [
             'days' => 9,
             'quizid' => 999,
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
         $this->assertEquals(999, $helper->quizid);
     }
@@ -209,16 +209,16 @@ class local_deleteoldquizattempts_delete_attempts_cli_testcase extends advanced_
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts'));
+        $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
 
-        $options = array(
+        $options = [
             'days' => 8,
             'courseid' => 888,
-        );
+        ];
         $helper->delete_attempts_cli_handler($options);
         $this->assertEquals(888, $helper->courseid);
     }

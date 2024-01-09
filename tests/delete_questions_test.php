@@ -50,13 +50,13 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         $question = $questiongenerator->create_question(
             'truefalse',
             null,
-            array('category' => $category->id)
+            ['category' => $category->id]
         );
-        $DB->set_field('question', 'hidden', 1, array('id' => $question->id));
+        $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
 
         $helper = new local_deleteoldquizattempts\helper();
-        list($deleted, $skipped) = $helper->delete_unused_questions();
-        $question = $DB->get_record('question', array('id' => $question->id));
+        [$deleted, $skipped] = $helper->delete_unused_questions();
+        $question = $DB->get_record('question', ['id' => $question->id]);
         $this->assertEmpty($question);
         $this->assertEquals(1, $deleted);
         $this->assertEquals(0, $skipped);
@@ -70,7 +70,7 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
 
         $this->resetAfterTest(true);
 
-        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(array('output'))->getMock();
+        $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
             ->expects($this->atLeast(2))
@@ -85,13 +85,13 @@ class local_deleteoldquizattempts_delete_questions_testcase extends advanced_tes
         $question = $questiongenerator->create_question(
             'truefalse',
             null,
-            array('category' => $category->id)
+            ['category' => $category->id]
             );
-        $DB->set_field('question', 'hidden', 1, array('id' => $question->id));
+        $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
 
         $helper = new local_deleteoldquizattempts\helper();
-        list($deleted, $skipped) = $helper->delete_unused_questions(time(), $trace);
-        $question = $DB->get_record('question', array('id' => $question->id));
+        [$deleted, $skipped] = $helper->delete_unused_questions(time(), $trace);
+        $question = $DB->get_record('question', ['id' => $question->id]);
         $this->assertEmpty($question);
         $this->assertEquals(1, $deleted);
         $this->assertEquals(0, $skipped);

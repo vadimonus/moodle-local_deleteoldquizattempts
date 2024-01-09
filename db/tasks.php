@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$tasks = array(
-    array(
+$tasks = [
+    [
         'classname' => 'local_deleteoldquizattempts\task\delete_attempts_task',
         'blocking' => 0,
         'minute' => '0',
@@ -34,5 +34,5 @@ $tasks = array(
         'month' => '*',
         'dayofweek' => '*',
         'disabled' => 0,
-    ),
-);
+    ],
+];

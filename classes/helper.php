@@ -59,17 +59,17 @@ class helper {
         global $DB;
 
         $where = "timestart < :timestamp";
-        $params = array('timestamp' => $timestamp);
+        $params = ['timestamp' => $timestamp];
         if ($this->courseid) {
-            $quizids = $DB->get_fieldset_select('quiz', 'id', 'course = :course', array(
+            $quizids = $DB->get_fieldset_select('quiz', 'id', 'course = :course', [
                 'course' => $this->courseid,
-            ));
-            list($quizwhere, $qizparams) = $DB->get_in_or_equal($quizids, SQL_PARAMS_NAMED, 'quiz');
+            ]);
+            [$quizwhere, $qizparams] = $DB->get_in_or_equal($quizids, SQL_PARAMS_NAMED, 'quiz');
             $where .= ' AND quiz ' . $quizwhere;
             $params = array_merge($params, $qizparams);
         } else if ($this->quizid) {
             $where .= ' AND quiz = :quizid';
-            $params = array_merge($params, array('quizid' => $this->quizid));
+            $params = array_merge($params, ['quizid' => $this->quizid]);
         }
         if ($trace) {
             $total = $DB->count_records_select('quiz_attempts', $where, $params);
@@ -79,14 +79,14 @@ class helper {
         $deleted = 0;
         $rs = $DB->get_recordset_select('quiz_attempts', $where, $params);
         foreach ($rs as $attempt) {
-            $quiz = $DB->get_record('quiz', array('id' => $attempt->quiz));
+            $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
             quiz_delete_attempt($attempt, $quiz);
             $deleted++;
             if ($trace) {
-                $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', array(
+                $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', [
                     'deleted' => $deleted,
                     'total' => $total,
-                )));
+                ]));
             }
             if ($stoptime && (time() >= $stoptime)) {
                 if ($trace) {
@@ -121,7 +121,7 @@ class helper {
                 FROM {quiz_slots}
                 WHERE {quiz_slots}.questionid = {question}.id
             )";
-        $params = array('hidden' => true);
+        $params = ['hidden' => true];
         if ($trace) {
             $total = $DB->count_records_select('question', $where, $params);
         } else {
@@ -132,17 +132,17 @@ class helper {
         $rs = $DB->get_recordset_select('question', $where, $params);
         foreach ($rs as $question) {
             question_delete_question($question->id);
-            if ($DB->record_exists('question', array('id' => $question->id))) {
+            if ($DB->record_exists('question', ['id' => $question->id])) {
                 $skipped++;
             } else {
                 $deleted++;
             }
             if ($trace) {
-                $trace->output(get_string('questionsprogress', 'local_deleteoldquizattempts', array(
+                $trace->output(get_string('questionsprogress', 'local_deleteoldquizattempts', [
                     'deleted' => $deleted,
                     'skipped' => $skipped,
                     'total' => $total,
-                )));
+                ]));
             }
             if ($stoptime && (time() >= $stoptime)) {
                 if ($trace) {
@@ -152,7 +152,7 @@ class helper {
             }
         }
         $rs->close();
-        return array($deleted, $skipped);
+        return [$deleted, $skipped];
     }
 
     /**
@@ -181,11 +181,11 @@ class helper {
         }
 
         if ($deletequestions) {
-            list($deleted, $skipped) = $this->delete_unused_questions($stoptime);
-            mtrace('    ' . get_string('questionsdeleted', 'local_deleteoldquizattempts', array(
+            [$deleted, $skipped] = $this->delete_unused_questions($stoptime);
+            mtrace('    ' . get_string('questionsdeleted', 'local_deleteoldquizattempts', [
                 'deleted' => $deleted,
                 'skipped' => $skipped,
-            )));
+                ]));
         }
     }
 
@@ -198,11 +198,11 @@ class helper {
 
         $exclusiveoptions = array_intersect(
             array_keys(array_filter($options)),
-            array('days', 'timestamp', 'date')
+            ['days', 'timestamp', 'date']
         );
         $exclusiveoptions2 = array_intersect(
             array_keys(array_filter($options)),
-            array('courseid', 'quizid')
+            ['courseid', 'quizid']
         );
         if (!empty($options['help']) || count($exclusiveoptions) != 1 || count($exclusiveoptions2) > 1) {
             $help = "Delete old quiz and question attempts

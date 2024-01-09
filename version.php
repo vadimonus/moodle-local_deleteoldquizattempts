@@ -29,6 +29,6 @@ $plugin->version   = 2022010200;
 $plugin->release = '2.2.1';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->requires  = 2014051200; // Moodle 2.7.
-$plugin->dependencies = array(
+$plugin->dependencies = [
     'mod_quiz' => 2014051200,
-);
+];

@@ -39,11 +39,11 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
      * Tests cli/delete_unused_questions.php --help
      */
     public function test_help() {
-        $options = array(
+        $options = [
             'timelimit' => false,
             'verbose' => false,
             'help' => true,
-        );
+        ];
         ob_start();
         $helper = new local_deleteoldquizattempts\helper();
         $helper->delete_questions_cli_handler($options);
@@ -59,7 +59,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectedstoptime = time() + 300;
@@ -73,11 +73,11 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
             null
         );
 
-        $options = array(
+        $options = [
             'timelimit' => 300,
             'verbose' => false,
             'help' => false,
-        );
+        ];
         $helper->delete_questions_cli_handler($options);
     }
 
@@ -88,7 +88,7 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());
@@ -98,11 +98,11 @@ class local_deleteoldquizattempts_delete_questions_cli_testcase extends advanced
             $this->isInstanceOf('text_progress_trace')
         );
 
-        $options = array(
+        $options = [
             'timelimit' => false,
             'verbose' => true,
             'help' => false,
-        );
+        ];
         $helper->delete_questions_cli_handler($options);
     }
 

@@ -32,7 +32,7 @@ if ($hassiteconfig) {
             new lang_string('attemptlifetime', 'local_deleteoldquizattempts'),
             new lang_string('attemptlifetime_help', 'local_deleteoldquizattempts'),
             0,
-            array(
+            [
                 0 => new lang_string('donotdeleteonschedule', 'local_deleteoldquizattempts'),
                 365 * 5 => new lang_string('numyears', '', 5),
                 365 * 3 => new lang_string('numyears', '', 3),
@@ -47,7 +47,7 @@ if ($hassiteconfig) {
                 15 => new lang_string('numdays', '', 15),
                 7 => new lang_string('numdays', '', 7),
                 3 => new lang_string('numdays', '', 3),
-            )
+            ]
         )
     );
     $settings->add(
@@ -64,7 +64,7 @@ if ($hassiteconfig) {
             new lang_string('maxexecutiontime', 'local_deleteoldquizattempts'),
             new lang_string('maxexecutiontime_help', 'local_deleteoldquizattempts'),
             0,
-            array(
+            [
                 0 => new lang_string('notlimited', 'local_deleteoldquizattempts'),
                 30 => new lang_string('numseconds', '', 30),
                 60 => new lang_string('numminutes', '', 1),
@@ -78,7 +78,7 @@ if ($hassiteconfig) {
                 60 * 60 * 4 => new lang_string('numhours', '', 4),
                 60 * 60 * 8 => new lang_string('numhours', '', 8),
                 60 * 60 * 12 => new lang_string('numhours', '', 12),
-            )
+            ]
         )
     );
 }

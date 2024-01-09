@@ -46,7 +46,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('deleteunusedquestions', null, 'local_deleteoldquizattempts');
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts', 'delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->never());
@@ -71,7 +71,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('deleteunusedquestions', 0, 'local_deleteoldquizattempts');
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts', 'delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectedtimestamp = time() - 30 * 3600 * 24;
@@ -107,7 +107,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts', 'delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->never());
@@ -115,7 +115,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
 
         $expectation2 = $helper->expects($this->once());
         $expectation2->method('delete_unused_questions');
-        $expectation2->willReturn(array(88, 77));
+        $expectation2->willReturn([88, 77]);
 
         ob_start();
         $helper->task_handler();
@@ -135,7 +135,7 @@ class local_deleteoldquizattempts_task_testcase extends advanced_testcase {
         set_config('deleteunusedquestions', 1, 'local_deleteoldquizattempts');
 
         $mockbuilder = $this->getMockBuilder('local_deleteoldquizattempts\helper');
-        $mockbuilder->onlyMethods(array('delete_attempts', 'delete_unused_questions'));
+        $mockbuilder->onlyMethods(['delete_attempts', 'delete_unused_questions']);
         $helper = $mockbuilder->getMock();
 
         $expectation1 = $helper->expects($this->once());
