@@ -38,7 +38,7 @@ class delete_attempts_test extends advanced_testcase {
     /**
      * Tests delete_attempts
      */
-    public function test_delete_attempts() {
+    public function test_delete_attempts(): void {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -99,7 +99,7 @@ class delete_attempts_test extends advanced_testcase {
     /**
      * Tests delete_attempts call with trace and timelimit
      */
-    public function test_delete_attempts_with_timelimit() {
+    public function test_delete_attempts_with_timelimit(): void {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -136,9 +136,9 @@ class delete_attempts_test extends advanced_testcase {
     }
 
     /**
-     * Tests delete_attempts call with with quizid
+     * Tests delete_attempts call with quizid
      */
-    public function test_delete_attempts_with_quizid() {
+    public function test_delete_attempts_with_quizid(): void {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -174,9 +174,9 @@ class delete_attempts_test extends advanced_testcase {
     }
 
     /**
-     * Tests delete_attempts call with with courseid
+     * Tests delete_attempts call with courseid
      */
-    public function test_delete_attempts_with_courseid() {
+    public function test_delete_attempts_with_courseid(): void {
         global $DB;
 
         $this->resetAfterTest(true);

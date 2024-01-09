@@ -38,7 +38,7 @@ class task_test extends advanced_testcase {
     /**
      * All options disabled
      */
-    public function test_all_disabled() {
+    public function test_all_disabled(): void {
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', null, 'local_deleteoldquizattempts');
@@ -61,9 +61,7 @@ class task_test extends advanced_testcase {
     /**
      * Option attemptlifetime is enabled
      */
-    public function test_delete_attempts_enabled() {
-        global $DB;
-
+    public function test_delete_attempts_enabled(): void {
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');
@@ -99,7 +97,7 @@ class task_test extends advanced_testcase {
     /**
      * Option deleteunusedquestions is enabled
      */
-    public function test_delete_questions_enabled() {
+    public function test_delete_questions_enabled(): void {
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', 0, 'local_deleteoldquizattempts');
@@ -127,7 +125,7 @@ class task_test extends advanced_testcase {
     /**
      * Tests delete_unused_questions is not called then timeput on delete_attempts.
      */
-    public function test_timeout_on_first() {
+    public function test_timeout_on_first(): void {
         $this->resetAfterTest(true);
 
         set_config('attemptlifetime', 30, 'local_deleteoldquizattempts');

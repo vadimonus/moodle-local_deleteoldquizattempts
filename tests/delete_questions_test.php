@@ -44,7 +44,7 @@ class delete_questions_test extends advanced_testcase {
     /**
      * Tests delete_attempts
      */
-    public function test_delete_questions() {
+    public function test_delete_questions(): void {
         global $DB;
 
         $this->resetAfterTest(true);
@@ -69,7 +69,7 @@ class delete_questions_test extends advanced_testcase {
     /**
      * Tests delete_attempts call with trace and timelimit
      */
-    public function test_delete_questions_with_timelimit() {
+    public function test_delete_questions_with_timelimit(): void {
         global $DB;
 
         $this->resetAfterTest(true);

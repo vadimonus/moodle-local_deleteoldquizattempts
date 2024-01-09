@@ -38,7 +38,7 @@ class delete_questions_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_unused_questions.php --help
      */
-    public function test_help() {
+    public function test_help(): void {
         $options = [
             'timelimit' => false,
             'verbose' => false,
@@ -55,7 +55,7 @@ class delete_questions_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_unused_questions.php --timelimit=300
      */
-    public function test_timelimit() {
+    public function test_timelimit(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
@@ -84,7 +84,7 @@ class delete_questions_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_unused_questions.php --verbose
      */
-    public function test_verbose() {
+    public function test_verbose(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);

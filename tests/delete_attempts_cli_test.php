@@ -38,7 +38,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --help
      */
-    public function test_help() {
+    public function test_help(): void {
         $options = [];
         ob_start();
         $helper = new helper();
@@ -82,7 +82,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --days=3
      */
-    public function test_days() {
+    public function test_days(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
@@ -110,7 +110,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --timestamp=10000
      */
-    public function test_timestamp() {
+    public function test_timestamp(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
@@ -120,7 +120,7 @@ class delete_attempts_cli_test extends advanced_testcase {
         $expectedtimestamp = 10000;
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
-        $expectation1->with(10000, 0, null);
+        $expectation1->with($expectedtimestamp, 0, null);
 
         $options = [
             'timestamp' => 10000,
@@ -131,14 +131,14 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --date="2000-01-01 00:00:00"
      */
-    public function test_date() {
+    public function test_date(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
         $mockbuilder->onlyMethods(['delete_attempts']);
         $helper = $mockbuilder->getMock();
 
-        $expectedtimestamp = 946684800; // Timestampt for "2000-01-01 00:00:00".
+        $expectedtimestamp = 946684800; // Timestamp for "2000-01-01 00:00:00".
         $expectation1 = $helper->expects($this->once());
         $expectation1->method('delete_attempts');
         $expectation1->with($expectedtimestamp, 0, null);
@@ -152,9 +152,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --timestamp=10000 --timelimit=300 --verbose
      */
-    public function test_timelimit_and_verbose() {
-        global $DB;
-
+    public function test_timelimit_and_verbose(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
@@ -184,7 +182,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --days=9 --quizid=999
      */
-    public function test_quizid() {
+    public function test_quizid(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
@@ -205,7 +203,7 @@ class delete_attempts_cli_test extends advanced_testcase {
     /**
      * Tests cli/delete_attempts.php --days=8 --courseid=888
      */
-    public function test_courseid() {
+    public function test_courseid(): void {
         $this->resetAfterTest(true);
 
         $mockbuilder = $this->getMockBuilder(helper::class);
