@@ -72,7 +72,7 @@ Links
 
 Changes
 -------
-Release 3.0.0 (build 2024XXXXXX):
+Release 3.0.0 (build 2024011400):
 - Moodle 4 support.
 - Dropped support for Moodle versions lower than 4.0 due to changes in core.
 
