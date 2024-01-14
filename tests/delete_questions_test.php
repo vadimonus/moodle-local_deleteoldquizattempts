@@ -25,6 +25,7 @@
 namespace local_deleteoldquizattempts;
 
 use advanced_testcase;
+use core_question\local\bank\question_version_status;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -57,7 +58,13 @@ class delete_questions_test extends advanced_testcase {
             null,
             ['category' => $category->id]
         );
-        $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
+        $DB->set_field(
+            'question_versions',
+            'status',
+            question_version_status::QUESTION_STATUS_HIDDEN,
+            [
+                'questionid' => $question->id,
+            ]);
 
         $helper = new helper();
         [$deleted, $skipped] = $helper->delete_unused_questions();
@@ -92,7 +99,13 @@ class delete_questions_test extends advanced_testcase {
             null,
             ['category' => $category->id]
             );
-        $DB->set_field('question', 'hidden', 1, ['id' => $question->id]);
+        $DB->set_field(
+            'question_versions',
+            'status',
+            question_version_status::QUESTION_STATUS_HIDDEN,
+            [
+                'questionid' => $question->id,
+            ]);
 
         $helper = new helper();
         [$deleted, $skipped] = $helper->delete_unused_questions(time(), $trace);

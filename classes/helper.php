@@ -24,6 +24,8 @@
 
 namespace local_deleteoldquizattempts;
 
+use core_question\local\bank\question_version_status;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
@@ -100,7 +102,7 @@ class helper {
     }
 
     /**
-     * Deletes unused hidden questions
+     * Deletes unused hidden question versions
      *
      * @param int $stoptime
      * @param \progress_trace|null $trace
@@ -109,27 +111,53 @@ class helper {
     public function delete_unused_questions($stoptime = 0, $trace = null) {
         global $DB;
 
-        $where = "
-            hidden = :hidden
-            AND NOT EXISTS (
-                SELECT 1
-                FROM {question_attempts}
-                WHERE {question_attempts}.questionid = {question}.id
-            )
-            AND NOT EXISTS (
-                SELECT 1
-                FROM {quiz_slots}
-                WHERE {quiz_slots}.questionid = {question}.id
-            )";
-        $params = ['hidden' => true];
+        $sqlfromwhere = "
+            FROM
+                {question} q
+                JOIN {question_versions} qv ON qv.questionid = q.id
+                JOIN {question_bank_entries} qbe ON qbe.id = qv.questionbankentryid
+            WHERE
+                qv.status = :hidden
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM
+                        {question_attempts} qa
+                        JOIN {question_usages} quba ON qa.questionusageid = quba.id
+                    WHERE
+                        qa.questionid = q.id
+                        AND quba.component <> 'core_question_preview'
+                )
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM {question_references} qr
+                    WHERE
+                        qr.questionbankentryid = qbe.id
+                        AND qv.version = (
+                            CASE
+                                WHEN qr.version IS NOT NULL THEN qr.version
+                                ELSE (
+                                    SELECT MAX(qv2.version)
+                                    FROM {question_versions} qv2
+                                    WHERE qv2.questionbankentryid = qbe.id
+                                )
+                            END
+                        )
+                )
+            ";
+        $sql = 'SELECT q.id ' . $sqlfromwhere;
+        $sqlcount = 'SELECT count(q.id) ' . $sqlfromwhere;
+        $params = [
+            'hidden' => question_version_status::QUESTION_STATUS_HIDDEN,
+            'preview' => 'core_question_preview',
+        ];
         if ($trace) {
-            $total = $DB->count_records_select('question', $where, $params);
+            $total = $DB->count_records_sql($sqlcount, $params);
         } else {
             $total = 0;
         }
         $deleted = 0;
         $skipped = 0;
-        $rs = $DB->get_recordset_select('question', $where, $params);
+        $rs = $DB->get_recordset_sql($sql, $params);
         foreach ($rs as $question) {
             question_delete_question($question->id);
             if ($DB->record_exists('question', ['id' => $question->id])) {
@@ -185,7 +213,7 @@ class helper {
             mtrace('    ' . get_string('questionsdeleted', 'local_deleteoldquizattempts', [
                 'deleted' => $deleted,
                 'skipped' => $skipped,
-                ]));
+            ]));
         }
     }
 
