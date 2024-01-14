@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
-
 namespace local_deleteoldquizattempts\privacy;
 
 use core_privacy\local\metadata\null_provider;
