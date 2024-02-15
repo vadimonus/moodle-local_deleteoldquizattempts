@@ -73,31 +73,34 @@ class helper {
             $where .= ' AND quiz = :quizid';
             $params = array_merge($params, ['quizid' => $this->quizid]);
         }
-        if ($trace) {
-            $total = $DB->count_records_select('quiz_attempts', $where, $params);
-        } else {
-            $total = 0;
-        }
+        $total = $DB->count_records_select('quiz_attempts', $where, $params);
+        $perpage = 1000;
+        $numpages = intval($total / $perpage);
         $deleted = 0;
-        $rs = $DB->get_recordset_select('quiz_attempts', $where, $params);
-        foreach ($rs as $attempt) {
-            $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
-            quiz_delete_attempt($attempt, $quiz);
-            $deleted++;
-            if ($trace) {
-                $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', [
-                    'deleted' => $deleted,
-                    'total' => $total,
-                ]));
-            }
-            if ($stoptime && (time() >= $stoptime)) {
+        for($page=0;$page<=$numpages;$page++) {
+            $rs = $DB->get_recordset_select('quiz_attempts', $where, $params, '', '*', $page, $perpage);
+            foreach ($rs as $attempt) {
+                $trace->output("DRY RUN: processing attempt ".$attempt->id);
+                continue;
+                $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
+                quiz_delete_attempt($attempt, $quiz);
+                $deleted++;
                 if ($trace) {
-                    $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+                    $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', [
+                        'deleted' => $deleted,
+                        'total' => $total,
+                    ]));
                 }
-                break;
+                if ($stoptime && (time() >= $stoptime)) {
+                    if ($trace) {
+                        $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+                    }
+                    break;
+                }
             }
+            $rs->close();
         }
-        $rs->close();
+
         return $deleted;
     }
 
