@@ -80,8 +80,6 @@ class helper {
         for($page=0;$page<=$numpages;$page++) {
             $rs = $DB->get_recordset_select('quiz_attempts', $where, $params, '', '*', $page, $perpage);
             foreach ($rs as $attempt) {
-                $trace->output("DRY RUN: processing attempt ".$attempt->id);
-                continue;
                 $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
                 quiz_delete_attempt($attempt, $quiz);
                 $deleted++;
