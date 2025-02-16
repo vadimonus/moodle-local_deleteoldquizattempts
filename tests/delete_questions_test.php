@@ -85,12 +85,12 @@ final class delete_questions_test extends advanced_testcase {
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
-            ->expects($this->atLeast(2))
+            ->expects($this->exactly(2))
             ->method('output')
-            ->withConsecutive(
-                [$this->stringContains('Deleted 1, skipped 0 of 1')],
-                [$this->stringContains('Operation stopped due to time limit')]
-            );
+            ->with($this->logicalOr(
+                $this->stringContains('Deleted 1, skipped 0 of 1'),
+                $this->stringContains('Operation stopped due to time limit')
+            ));
 
         $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $questiongenerator->create_question_category();

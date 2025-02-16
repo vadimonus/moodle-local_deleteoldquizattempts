@@ -108,12 +108,12 @@ final class delete_attempts_test extends advanced_testcase {
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
-            ->expects($this->atLeast(2))
+            ->expects($this->exactly(2))
             ->method('output')
-            ->withConsecutive(
-                [$this->stringContains('Deleted 1 of 1')],
-                [$this->stringContains('Operation stopped due to time limit')]
-            );
+            ->with($this->logicalOr(
+                $this->stringContains('Deleted 1 of 1'),
+                $this->stringContains('Operation stopped due to time limit')
+            ));
 
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
@@ -185,11 +185,12 @@ final class delete_attempts_test extends advanced_testcase {
         $trace = $this->getMockBuilder('null_progress_trace')->onlyMethods(['output'])->getMock();
 
         $trace
-            ->expects($this->atLeastOnce())
+            ->expects($this->exactly(2))
             ->method('output')
-            ->withConsecutive(
-                [$this->stringContains('Deleted 1 of 2')]
-            );
+            ->with($this->logicalOr(
+                $this->stringContains('Deleted 1 of 2'),
+                $this->stringContains('Deleted 2 of 2')
+            ));
 
         $course = $this->getDataGenerator()->create_course();
         $user = $this->getDataGenerator()->create_user();
