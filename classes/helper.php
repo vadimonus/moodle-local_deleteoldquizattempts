@@ -79,25 +79,29 @@ class helper {
             $total = 0;
         }
         $deleted = 0;
-        $rs = $DB->get_recordset_select('quiz_attempts', $where, $params);
-        foreach ($rs as $attempt) {
-            $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
-            quiz_delete_attempt($attempt, $quiz);
-            $deleted++;
-            if ($trace) {
-                $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', [
-                    'deleted' => $deleted,
-                    'total' => $total,
-                ]));
-            }
-            if ($stoptime && (time() >= $stoptime)) {
+        do {
+            $rs = $DB->get_recordset_select('quiz_attempts', $where, $params, '', '*', 0, 10000);
+            $rsempty = true;
+            foreach ($rs as $attempt) {
+                $rsempty = false;
+                $quiz = $DB->get_record('quiz', ['id' => $attempt->quiz]);
+                quiz_delete_attempt($attempt, $quiz);
+                $deleted++;
                 if ($trace) {
-                    $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+                    $trace->output(get_string('attemptsprogress', 'local_deleteoldquizattempts', [
+                        'deleted' => $deleted,
+                        'total' => $total,
+                    ]));
                 }
-                break;
+                if ($stoptime && (time() >= $stoptime)) {
+                    if ($trace) {
+                        $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+                    }
+                    break 2;
+                }
             }
-        }
-        $rs->close();
+            $rs->close();
+        } while (!$rsempty);
         return $deleted;
     }
 
@@ -157,29 +161,33 @@ class helper {
         }
         $deleted = 0;
         $skipped = 0;
-        $rs = $DB->get_recordset_sql($sql, $params);
-        foreach ($rs as $question) {
-            question_delete_question($question->id);
-            if ($DB->record_exists('question', ['id' => $question->id])) {
-                $skipped++;
-            } else {
-                $deleted++;
-            }
-            if ($trace) {
-                $trace->output(get_string('questionsprogress', 'local_deleteoldquizattempts', [
-                    'deleted' => $deleted,
-                    'skipped' => $skipped,
-                    'total' => $total,
-                ]));
-            }
-            if ($stoptime && (time() >= $stoptime)) {
-                if ($trace) {
-                    $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+        do {
+            $rs = $DB->get_recordset_sql($sql, $params, 0, 10000);
+            $rsempty = true;
+            foreach ($rs as $question) {
+                $rsempty = false;
+                question_delete_question($question->id);
+                if ($DB->record_exists('question', ['id' => $question->id])) {
+                    $skipped++;
+                } else {
+                    $deleted++;
                 }
-                break;
+                if ($trace) {
+                    $trace->output(get_string('questionsprogress', 'local_deleteoldquizattempts', [
+                        'deleted' => $deleted,
+                        'skipped' => $skipped,
+                        'total' => $total,
+                    ]));
+                }
+                if ($stoptime && (time() >= $stoptime)) {
+                    if ($trace) {
+                        $trace->output(get_string('maxexecutiontime_reached', 'local_deleteoldquizattempts'));
+                    }
+                    break 2;
+                }
             }
-        }
-        $rs->close();
+            $rs->close();
+        } while (!$rsempty);
         return [$deleted, $skipped];
     }
 
