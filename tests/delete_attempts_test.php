@@ -34,7 +34,7 @@ use advanced_testcase;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers \local_deleteoldquizattempts\helper::delete_attempts
  */
-class delete_attempts_test extends advanced_testcase {
+final class delete_attempts_test extends advanced_testcase {
 
     /**
      * Tests delete_attempts
